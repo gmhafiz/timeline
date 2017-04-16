@@ -12,19 +12,20 @@ import (
 )
 
 type (
-	Events struct {
+	Event struct {
 		Id		int64		`json:"id"`
-		Title		string		`json:"title"`
 		Content		string		`sql:"size:1024" json:"content"`
 		Start		string		`json:"start"`
 		End		string		`json:"end"`
 		Type		string		`json:"type"`
+		Title		string		`json:"title"`
 		Group		string		`json:"group"`
 		Subgroup	string		`json:"subgroup"`
 		Style		string		`json:"style"`
 		CreatedAt	time.Time	`json:"createdAt"`
 		UpdatedAt	time.Time	`json:"updatedAt"`
-		DeletedAt	time.Time	`json:"-"`
+		//DeletedAt	time.Time	`json:"deletedAt"` // fixme: by default, this column is not null (there's some value). Problem with sql query because it asks for: SELECT * FROM "events"  WHERE "events"."deleted_at" IS NULL AND (("events"."id" = '4')) ORDER BY "events"."id" ASC LIMIT 1
+
 	}
 
 	Impl struct {
@@ -42,11 +43,11 @@ func (i *Impl) InitDB() {
 }
 
 func (i *Impl) InitSchema() {
-	i.DB.AutoMigrate(&Events{})
+	i.DB.AutoMigrate(&Event{})
 }
 
 func (i *Impl) PostEvent(w rest.ResponseWriter, r *rest.Request) {
-	event :=  Events{}
+	event :=  Event{}
 	if err := r.DecodeJsonPayload(&event); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -57,6 +58,21 @@ func (i *Impl) PostEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&event)
 }
 
+func( i* Impl) GetAllEvents(w rest.ResponseWriter, r *rest.Request) {
+	events := []Event{}
+	i.DB.Find(&events)
+	w.WriteJson(&events)
+}
+
+func (i *Impl) GetEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	event := Event{}
+	if i.DB.First(&event, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	w.WriteJson(&event)
+}
 
 func main() {
 	i := Impl{}
@@ -71,6 +87,8 @@ func main() {
 			w.WriteJson(map[string]string{"Body":"Hello World!"})
 		}),
 		rest.Post("/event", i.PostEvent),
+		rest.Get("/event/:id", i.GetEvent),
+		rest.Get("/events", i.GetAllEvents),
 	)
 	if err != nil {
 		log.Fatalln(err)
