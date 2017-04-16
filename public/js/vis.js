@@ -33,7 +33,6 @@ function ConvertFormToJSON(form){
     return JSON.stringify(json);
 }
 
-
 jQuery(document).on('ready', function () {
     jQuery('form#addEvent').bind('submit', function (ev) {
         ev.preventDefault();
@@ -47,14 +46,38 @@ jQuery(document).on('ready', function () {
             dataType: "json",
             contentType: "application/json",
             success : function(data) {
-                console.log(jsonData)
+                console.log(data);
+                console.log(jsonData);
             },
             error : function (data) {
-                console.log(jsonData)
+                console.log(data);
+                console.log(jsonData);
             }
 
         });
+        $('form#addEvent')[0].reset();
+        return true;
     });
-    $('form#addEvent')[0].reset();
-    return true;
-})
+
+
+    jQuery('form#getAllEvents').bind('submit', function (ev) {
+        ev.preventDefault();
+        var jsonData = {};
+        var payloadTextArea = document.getElementById("payload");
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/events",
+            data: jsonData,
+            dataType: "json",
+            success: function (data) {
+                var payload = JSON.stringify(data);
+                console.log(payload);
+                payloadTextArea.value = payload;
+            },
+            error: function (data) {
+                console.log(data);
+                console.log("error: " + jsonData);
+            }
+        })
+    });
+});
