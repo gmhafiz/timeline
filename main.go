@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"fmt"
-	"time"
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/jinzhu/gorm"
@@ -18,12 +17,12 @@ type (
 		Start		string		`json:"start"`
 		End		string		`json:"end"`
 		Type		string		`json:"type"`
-		Title		string		`json:"title"`
-		Group		string		`json:"group"`
-		Subgroup	string		`json:"subgroup"`
-		Style		string		`json:"style"`
-		CreatedAt	time.Time	`json:"createdAt"`
-		UpdatedAt	time.Time	`json:"updatedAt"`
+		//Title		string		`json:"title"`
+		//Group		string		`json:"group"`
+		//Subgroup	string		`json:"subgroup"`
+		//Style		string		`json:"style"`
+		//CreatedAt	time.Time	`json:"createdAt"`
+		//UpdatedAt	time.Time	`json:"updatedAt"`
 		//DeletedAt	time.Time	`json:"deletedAt"` // fixme: by default, this column is not null (there's some value). Problem with sql query because it asks for: SELECT * FROM "events"  WHERE "events"."deleted_at" IS NULL AND (("events"."id" = '4')) ORDER BY "events"."id" ASC LIMIT 1
 
 	}
