@@ -1,4 +1,12 @@
-.jumbotron {
+.jumbotron  {
+    padding-left: 0;
+    padding-right: 0;
+}
+.jumbotron .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+.jumbotron .row .col {
     padding-left: 0;
     padding-right: 0;
 }
