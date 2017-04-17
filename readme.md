@@ -46,13 +46,13 @@ There are two ways of obtaining the code.
 
 
 ```
-	Event struct {
-		Id      int64   `json:"id"`
-		Content string  `sql:"size:1024" json:"content"`
-		Start   string  `json:"start"`
-		End     string  `json:"end"`
-		Type    string  `json:"type"`
-    }
+Event struct {
+    Id      int64   `json:"id"`
+    Content string  `sql:"size:1024" json:"content"`
+    Start   string  `json:"start"`
+    End     string  `json:"end"`
+    Type    string  `json:"type"`
+}
 ```
 
 ### POST
@@ -89,7 +89,8 @@ X-Powered-By: go-json-rest
 
 1. Get a specific event by id
 
-    /vis/event/:id
+    /api/event/:id
+    
     
 Example
 
@@ -121,7 +122,8 @@ X-Powered-By: go-json-rest
     
 2. Get all events
 
-    /vis/events
+    /api/events
+    
     
 Example:
     
@@ -175,7 +177,7 @@ Example
 
 ```bash
 http DELETE http://localhost:8080/api/event/3
-
+```
 
 
 Returns
