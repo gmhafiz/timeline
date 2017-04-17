@@ -3,7 +3,11 @@
 var container = document.getElementById('visualization');
 
 // Create a DataSet (allows two way data-binding)
-var items = new vis.DataSet(
+
+
+
+
+var items = new vis.DataSet(getAllEvents()
 //     [
 //     {id: 1, content: 'item 1', start: '2017-04-20'},
 //     {id: 2, content: 'item 2', start: '2017-04-14'},
@@ -32,8 +36,7 @@ var options = {
     },
 
     onRemove: function(item, callback)  {
-        // prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
-        var ok = true;
+        prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
             if (ok) {
                 callback(item);
                 // todo: update db
@@ -42,7 +45,7 @@ var options = {
             } else {
                 callback (null);
             }
-        // });
+        });
     }
 };
 
@@ -57,6 +60,23 @@ jQuery(document).on('ready', function () {
     jQuery('form#addEvent').bind('submit', function (ev) {
         ev.preventDefault();
         var form = this;
+        // todo: check if end is entered ? type=range : type=point
+
+        var eventType = document.getElementsByName("type");
+        console.log(eventType[0].value); // range
+        console.log(eventType[1].value); // point
+
+        var endDate = document.getElementById("endDate");
+        console.log(endDate.value);
+
+        if (endDate.value === '') {
+            this.type = 'point';
+            eventType[1].checked = true;
+        } else {
+            this.type = 'range';
+            eventType[0].checked = true;
+        }
+
         var jsonData = ConvertFormToJSON(form);
 
         $.ajax({
@@ -118,6 +138,28 @@ function ConvertFormToJSON(form){
     return JSON.stringify(json);
 }
 
+function getAllEvents()  {
+    var jsonData = {};
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/events",
+        data: jsonData,
+        dataType: "json",
+        success: function (data) {
+
+            items.clear();
+            items.add(data);
+            timeline.redraw();
+        },
+        error: function (data) {
+            console.log(data);
+            console.log("error: " + jsonData);
+        }
+    });
+
+    return jsonData;
+}
+
 function deleteItemDB(id) {
     $.ajax({
         type: "DELETE",
@@ -125,7 +167,7 @@ function deleteItemDB(id) {
         data: null,
         dataType: "json",
         contentType: "application/json",
-        success: function(data) {
+        success: function() {
             console.log("Removed item :" + id);
         },
         error: function (data) {
@@ -133,6 +175,26 @@ function deleteItemDB(id) {
             console.log(data);
         }
     })
+}
+
+// todo: onBlur for end date label, switch the radio button type to be for range or point. adjust json data too?
+
+function hideEndDateDiv() {
+    var endDateDiv = document.getElementById("endDateDiv");
+    var startDateLabel = document.getElementById("startDateLabel");
+    endDateDiv.style.display = 'none';
+    startDateLabel.innerHTML = 'Date';
+}
+function showEndDateDiv() {
+    var endDateDiv = document.getElementById("endDateDiv");
+    var startDateLabel = document.getElementById("startDateLabel");
+    endDateDiv.style.display = 'block';
+    startDateLabel.innerHTML = 'Start Date';
+}
+function checkPoint() {
+    var eventType = document.getElementsByName("type");
+    eventType[1].checked = true;
+    hideEndDateDiv();
 }
 
 items.on('*', function (event, properties) {
