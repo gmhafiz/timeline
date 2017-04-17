@@ -73,6 +73,20 @@ func (i *Impl) GetEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&event)
 }
 
+func (i *Impl) DeleteEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	event := Event{}
+	if i.DB.First(&event, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	if err := i.DB.Delete(&event).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
 func main() {
 	i := Impl{}
 	i.InitDB()
@@ -88,6 +102,7 @@ func main() {
 		rest.Post("/event", i.PostEvent),
 		rest.Get("/event/:id", i.GetEvent),
 		rest.Get("/events", i.GetAllEvents),
+		rest.Delete("/event/:id", i.DeleteEvent),
 	)
 	if err != nil {
 		log.Fatalln(err)
