@@ -129,7 +129,7 @@ Example:
 http GET http://localhost:8080/api/events
 ```
 
-    
+
 Returns
 
 ```
@@ -175,8 +175,9 @@ Example
 
 ```bash
 http DELETE http://localhost:8080/api/event/3
-```
-    
+
+
+
 Returns
 
 ```
