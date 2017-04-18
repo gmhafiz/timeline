@@ -1,3 +1,5 @@
+// var baseURL =  "http://localhost:8080/";
+var baseURL =  "https://www.gmhafiz.com/";
 
 // DOM element where the Timeline will be attached
 var container = document.getElementById('visualization');
@@ -81,7 +83,7 @@ jQuery(document).on('ready', function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/api/event",
+            url: baseURL + "api/event",
             data: jsonData,
             dataType: "json",
             contentType: "application/json",
@@ -107,7 +109,7 @@ jQuery(document).on('ready', function () {
         var payloadTextArea = document.getElementById("payload");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/events",
+            url:  baseURL + "api/events",
             data: jsonData,
             dataType: "json",
             success: function (data) {
@@ -142,7 +144,7 @@ function getAllEvents()  {
     var jsonData = {};
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/events",
+        url:  baseURL + "api/events",
         data: jsonData,
         dataType: "json",
         success: function (data) {
@@ -163,7 +165,7 @@ function getAllEvents()  {
 function deleteItemDB(id) {
     $.ajax({
         type: "DELETE",
-        url: "http://localhost:8080/api/event/" + id,
+        url:  baseURL + "api/event/" + id,
         data: null,
         dataType: "json",
         contentType: "application/json",
@@ -171,8 +173,11 @@ function deleteItemDB(id) {
             console.log("Removed item :" + id);
         },
         error: function (data) {
-            console.log("Unsuccessful removal of item " + id);
-            console.log(data);
+            if (data.status !== 200) {
+                // the api returns nothing after deletion. So we check if the return status is OK
+                console.log("Unsuccessful removal of item " + id);
+                console.log(data);
+            }
         }
     })
 }
@@ -192,9 +197,13 @@ function showEndDateDiv() {
     startDateLabel.innerHTML = 'Start Date';
 }
 function checkPoint() {
-    var eventType = document.getElementsByName("type");
-    eventType[1].checked = true;
-    hideEndDateDiv();
+    var endDateDiv = document.getElementById("endDateDiv");
+    var endDate = document.getElementById("endDate");
+    if (endDate.value === '') {
+        var eventType = document.getElementsByName("type");
+        eventType[1].checked = true;
+        hideEndDateDiv();
+    }
 }
 
 items.on('*', function (event, properties) {
