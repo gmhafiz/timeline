@@ -94,6 +94,17 @@ func main() {
 
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
+	api.Use(&rest.CorsMiddleware{
+		RejectNonCorsRequests: false,
+		OriginValidator: func(origin string,  request *rest.Request) bool {
+			return origin == "https://www.gmhafiz.com"
+		},
+		AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
+		AllowedHeaders: []string {
+			"Accept", "Content-Type", "Origin"},
+		AccessControlAllowCredentials: true,
+		AccessControlMaxAge: 3600,
+	})
 
 	router, err := rest.MakeRouter(
 		rest.Get("/message", func(w rest.ResponseWriter, req *rest.Request) {
