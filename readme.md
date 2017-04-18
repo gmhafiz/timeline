@@ -201,6 +201,7 @@ todo
 - [x] CRUD data persistence with sqlite using gorm
 - [x] One way data binding from frontend to backend
 - [x] Two way data binding
+- [x] CORS Support
 - [ ] Allow user registration with oauth
 - [ ] Allow only logged in user to modify data
 - [ ] Limit JSON acceptance size
