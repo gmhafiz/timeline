@@ -14,12 +14,13 @@ type (
 	Event struct {
 		Id		int64		`json:"id"`
 		Content		string		`sql:"size:1024" json:"content"`
-		Start		string		`json:"start"`
+		Start		string		`json:"start"` // todo: change to time.Time. later can query who's working on the day
 		End		string		`json:"end"`
 		Type		string		`json:"type"`
+		ClassName	string		`json:"className"`
 		//Title		string		`json:"title"`
-		//Group		string		`json:"group"`
-		//Subgroup	string		`json:"subgroup"`
+		Group		string		`json:"group"`
+		Subgroup	string		`json:"subgroup"`
 		//Style		string		`json:"style"`
 		//CreatedAt	time.Time	`json:"createdAt"`
 		//UpdatedAt	time.Time	`json:"updatedAt"`
@@ -94,17 +95,17 @@ func main() {
 
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
-	api.Use(&rest.CorsMiddleware{
-		RejectNonCorsRequests: false,
-		OriginValidator: func(origin string,  request *rest.Request) bool {
-			return origin == "https://www.gmhafiz.com"
-		},
-		AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
-		AllowedHeaders: []string {
-			"Accept", "Content-Type", "Origin"},
-		AccessControlAllowCredentials: true,
-		AccessControlMaxAge: 3600,
-	})
+	//api.Use(&rest.CorsMiddleware{
+	//	RejectNonCorsRequests: false,
+	//	OriginValidator: func(origin string,  request *rest.Request) bool {
+	//		return origin == "https://www.gmhafiz.com"
+	//	},
+	//	AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
+	//	AllowedHeaders: []string {
+	//		"Accept", "Content-Type", "Origin"},
+	//	AccessControlAllowCredentials: true,
+	//	AccessControlMaxAge: 3600,
+	//})
 
 	router, err := rest.MakeRouter(
 		rest.Get("/message", func(w rest.ResponseWriter, req *rest.Request) {
@@ -122,7 +123,7 @@ func main() {
 	http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
 	// http GET http://127.0.0.1:8080/api/message
 
-	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
+	http.Handle("/timetable/", http.StripPrefix("/timetable", http.FileServer(http.Dir("./timetable"))))
 	// http GET http://127.0.0.1:8080/public/css/bootstrap.min.css
 	fmt.Println("Serving at :8080")
 	log.Fatalln(http.ListenAndServe(":8080", nil))

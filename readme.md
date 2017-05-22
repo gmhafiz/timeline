@@ -32,7 +32,7 @@ There are two ways of obtaining the code.
 1. Obtain the code
 2. run `go run main.go`
 3. go to `http://localhost:8080/public` to access frontend
-4. install httpie `sudo apt install httpie` for http queries
+4. (Optional) install httpie `sudo apt install httpie` for http queries
 5. Follow examples below
 
 
