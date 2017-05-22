@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gmhafiz's Timeline</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <!--<script src="js/jspdf.min.js"></script>-->
+  <script src="https://t4t5.github.io/sweetalert/dist/sweetalert.min.js"></script>
+  <link href="https://t4t5.github.io/sweetalert/dist/sweetalert.css" rel="stylesheet"
+        type="text/css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.css" rel="stylesheet"
+        type="text/css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="https://www.gmhafiz.com/timetable">gmhafiz's Timetable Maker</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Settings <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="https://www.gmhafiz.com/">author's website</a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+        <div class="input-group">
+          <span class="input-group-addon">@</span>
+          <input class="form-control mr-sm-2" type="text" placeholder="Username">
+          <span class="input-group-addon">*</span>
+          <input class="form-control mr-sm-2" type="password" placeholder="Password">
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+        </div>
+    </form>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="row">
+    <div class="col">
+      <div id="visualization"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <form id="addEvent">
+        <div class="row">
+          <div class="col-sm-6">
+
+            <div class="form-group">
+              <label for="indName">Select Name</label>
+              <select name="group" id="indName" class="form-control">
+                <option value="0">NEL, Pieter</option>
+                <option value="1">BOES, Sabine</option>
+                <option value="2">WEARNE, Jack</option>
+                <option value="3">GILES, Andrew</option>
+                <option value="4">NG< Lesley</option>
+                <option value="5">MAHANI, Abbas</option>
+                <option value="6">THORNTON, NEALE</option>
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <label for="shiftName">Shift Type</label>
+              <select name="className" id="shiftName" class="form-control">
+              <!--<select id="shiftName" class="form-control">-->
+                <option value="rl">RL</option>
+                <option value="admin">ADMIN</option>
+                <option value="mc">MC</option>
+                <option value="oncall">On-Call</option>
+                <option value="pita">PIT A</option>
+                <option value="pitb">PIT B</option>
+                <option value="fasttrack">Fast Track</option>
+                <option value="nc">NC</option>
+
+              </select>
+            </div>
+
+            <!--<div class="form-group">-->
+              <!--<label for="shiftSlot">Shift Slot</label>-->
+              <!--<select  id="shiftSlot" class="form-control">-->
+                <!--<option value="rl">RL</option>-->
+                <!--<option value="admin">ADMIN</option>-->
+                <!--<option value="mc">MC</option>-->
+                <!--<option value="oncall">On-Call</option>-->
+                <!--<option value="pita">PIT A</option>-->
+                <!--<option value="pitb">PIT B</option>-->
+                <!--<option value="fasttrack">Fast Track</option>-->
+                <!--<option value="nc">NC</option>-->
+
+              <!--</select>-->
+            <!--</div>-->
+
+
+            <div class="form-group" style="display: none">
+              <label for="content">Notes</label>
+              <textarea id="content" type="text" class="form-control" name="content"></textarea>
+            </div>
+
+          </div>
+          <div class="col-sm-6">
+            <fieldset>
+              <span>Type</span>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input id="typeRanged" class="form-check-input" type="radio" name="type"
+                         value="range"
+                         checked onclick="return showEndDateDiv();">
+                  Range of Time
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input id="typePoint" class="form-check-input" type="radio" name="type"
+                         value="point"
+                         onclick="return hideEndDateDiv();">
+                  Single Point
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="form-group">
+              <label id="startDateLabel" for="startDate">Start Date</label>
+              <input id="startDate" type="text" class="form-control" name="start"
+                     value="2017-04-16">
+            </div>
+
+            <div id="endDateDiv" class="form-group">
+              <label for="endDate">End Date</label>
+              <input id="endDate" type="text" class="form-control" name="end" value="2017-04-19"
+                     onblur="return checkPoint();">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add To Timeline</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <section>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr>
+        <button id="generateImage" type="submit" class="btn btn-primary"
+                onclick="return generateImage();"><i class="fa fa-download"></i> Download TimeTable
+          as image
+        </button>
+        <br>
+        <br>
+        <button id="notify" class="btn btn-primary" onclick="return notify();"><i
+            class="fa fa-envelope"></i> Notify / Email
+        </button>
+
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="debug" style="display:none">
+    <div class="row">
+      <div class="col">
+        <form id="getAllEvents">
+          <div class="form-group">
+            <label for="payload">Event JSON</label>
+            <textarea id="payload" type="text" class="form-control" name="payload" rows="20">
+              </textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Get All Events</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div id="log">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>-->
+<!--<script src="js/lib/html2pdf.js"></script>-->
+<script src="js/html2canvas.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
