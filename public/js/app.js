@@ -22,7 +22,7 @@ var items = new vis.DataSet(getAllEvents()
 // Configuration for the Timeline
 var options = {
     width: '100%',
-    // height: '60vh',
+    height: '40vh',
     selectable: true,
     autoResize: true,
     editable: {
@@ -251,7 +251,7 @@ jQuery(document).on('ready', function () {
         var jsonData = {};
         var searchString = document.getElementById("searchString").value;
         var searchResult = [];
-        var searchResultDiv = document.getElementById("searchResult");
+        // var patt = /w3schools/i;
         $.ajax({
             type: "GET",
             url: baseURL + "api/events",
@@ -263,12 +263,10 @@ jQuery(document).on('ready', function () {
 
                 searchResult = searchContent(data, searchString);
                 console.log(searchResult);
-                // searchResultDiv.innerHTML = JSON.stringify(searchResult);
+
                 displayResult(searchResult);
 
             },
-
-
 
             error: function (data) {
                 console.log(data);
@@ -303,10 +301,14 @@ function searchContent (data, searchString) {
 
 /**
  *
- * @param searchResult JSON object
+ * @param searchResult One JSON object
  */
 function displayResult(searchResult) {
+    var searchResultDiv = document.getElementById("searchResult");
+    var startDate = searchResult["start"];
 
+    timeline.moveTo(startDate);
+    searchResultDiv.innerHTML = JSON.stringify(searchResult);
 }
 
 function ConvertFormToJSON(form) {
