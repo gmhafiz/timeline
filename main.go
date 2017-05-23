@@ -35,9 +35,9 @@ type (
 
 func (i *Impl) InitDB() {
 	var err error
-	i.DB, err = gorm.Open("sqlite3", "db/events.db")
+	i.DB, err = gorm.Open("sqlite3", "db/events.db") // fixme: systemd cannot open this database
 	if err != nil {
-		log.Fatalln("Error connecting database: '%v'", err)
+		log.Fatalln("Error connecting database: ", err)
 	}
 	i.DB.LogMode(true)
 }
@@ -95,22 +95,20 @@ func main() {
 
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
-	//api.Use(&rest.CorsMiddleware{
-	//	RejectNonCorsRequests: false,
-	//	OriginValidator: func(origin string,  request *rest.Request) bool {
-	//		return origin == "https://www.gmhafiz.com"
-	//	},
-	//	AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
-	//	AllowedHeaders: []string {
-	//		"Accept", "Content-Type", "Origin"},
-	//	AccessControlAllowCredentials: true,
-	//	AccessControlMaxAge: 3600,
-	//})
+	api.Use(&rest.CorsMiddleware{
+		RejectNonCorsRequests: false,
+		OriginValidator: func(origin string,  request *rest.Request) bool {
+			//return origin == "https://www.gmhafiz.com"
+			return true
+		},
+		AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
+		AllowedHeaders: []string {
+			"Accept", "Content-Type", "Origin"},
+		AccessControlAllowCredentials: true,
+		AccessControlMaxAge: 3600,
+	})
 
 	router, err := rest.MakeRouter(
-		rest.Get("/message", func(w rest.ResponseWriter, req *rest.Request) {
-			w.WriteJson(map[string]string{"Body":"Hello World!"})
-		}),
 		rest.Post("/event", i.PostEvent),
 		rest.Get("/event/:id", i.GetEvent),
 		rest.Get("/events", i.GetAllEvents),
@@ -121,10 +119,7 @@ func main() {
 	}
 	api.SetApp(router)
 	http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
-	// http GET http://127.0.0.1:8080/api/message
-
-	http.Handle("/timetable/", http.StripPrefix("/timetable", http.FileServer(http.Dir("./timetable"))))
-	// http GET http://127.0.0.1:8080/public/css/bootstrap.min.css
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
 	fmt.Println("Serving at :8080")
 	log.Fatalln(http.ListenAndServe(":8080", nil))
 
