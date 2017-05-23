@@ -339,7 +339,7 @@ function moveWindow(startDate) {
     var moveToOptions = {
         animation: {
             duration: 500,
-            easingFunction: "easeInQuad"
+            easingFunction: "easeInOutQuad"
         }
     };
     timeline.moveTo(startDate, moveToOptions);
