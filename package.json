@@ -1,0 +1,22 @@
+{
+  "name": "timeline",
+  "version": "1.0.0",
+  "description": "## Introduction Display your own timeline history using [vis.js](http://visjs.org).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmhafiz/timeline.git"
+  },
+  "author": "Hafiz Shafruddin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmhafiz/timeline/issues"
+  },
+  "homepage": "https://github.com/gmhafiz/timeline#readme",
+  "dependencies": {
+    "spectre.css": "^0.2.14"
+  }
+}
