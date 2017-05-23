@@ -66,6 +66,7 @@ var options = {
                 // todo: add option for range of date
                 // item.group = "\"" + item.group + "\"";
                 // item.subgroup = "\"" + item.subgroup + "\"";
+                item.type = 'point'; // all events added by this is a point
                 addEvent(item);
                 // callback(item); // send back adjusted new item
             }
@@ -444,10 +445,24 @@ function checkPoint() {
     }
 }
 
+/**
+ * jQuery Date Time Picker
+ */
+var dateTimePickerOptions = {
+        format: 'Y-m-d',
+        timepicker: false,
+        allowBlack: false
+};
+jQuery('#startDate').datetimepicker(dateTimePickerOptions);
+jQuery('#endDate').datetimepicker(dateTimePickerOptions);
+
+
+/**
+ * Log all visjs events
+ */
 items.on('*', function (event, properties) {
     logEvent(event, properties);
 });
-
 function logEvent(event, properties) {
     var log = document.getElementById('log');
     var msg = document.createElement('div');
@@ -456,6 +471,13 @@ function logEvent(event, properties) {
     log.firstChild ? log.insertBefore(msg, log.firstChild) : log.appendChild(msg);
 }
 
+
+/**
+ * Pretty Prompts
+ * @param title
+ * @param text
+ * @param callback
+ */
 function prettyConfirm(title, text, callback) {
     swal({
         title: title,
