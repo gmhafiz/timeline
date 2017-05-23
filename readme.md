@@ -211,15 +211,19 @@ todo
 - [ ] Do UPDATE http request
 - [ ] moving or resizing event(s) updates the database
 
-### Credits || References
+### Libraries
 
 - [vis.js/docs/timeline](http://visjs.org).
-- [https://github.com/ant0ine/go-json-rest](https://github.com/ant0ine/go-json-rest) json REST library
-- [golang docs](https://golang.org/doc/)
--  [sqlite3 driver](github.com/mattn/go-sqlite3)
+- [https://github.com/ant0ine/go-json-rest](https://github.com/ant0ine/go-json-rest) json REST library 
+- [sqlite3 driver](github.com/mattn/go-sqlite3)
 - [gorm orm](https://github.com/jinzhu/gorm)
-- [bootstrap](https://getbootstrap.com)
 - [sweetalert](http://t4t5.github.io/sweetalert)
+- [spectre css](https://picturepan2.github.io/spectre/index.html)
+- [moment js](http://momentjs.com/)
+
+### Credits || References
+
+- [golang docs](https://golang.org/doc/)
 - https://stackoverflow.com/questions/24770403/go-write-struct-to-json-file-using-struct-fields-not-json-keys
 - https://stackoverflow.com/questions/9688660/send-json-from-html-form-with-nodejs-backend
 - https://github.com/gin-gonic/gin/issues/75
