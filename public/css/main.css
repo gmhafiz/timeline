@@ -1,6 +1,15 @@
+html {
+    font-size: 16px;
+}
 body {
     background: #eaeaea;
     /*background: #fff;*/
+}
+
+
+#timeline {
+padding-left: 0;
+padding-right: 0;
 }
 
 #visualization {
@@ -8,19 +17,19 @@ body {
     background: #fff;
 }
 
-.jumbotron  {
-    padding: 1rem 0;
-    /*background: #c0dce3;*/
-    background: #fff;
-}
-.jumbotron .row {
-    margin-left: 0;
-    margin-right: 0;
-}
-.jumbotron .row .col {
-    padding-left: 0;
-    padding-right: 0;
-}
+/*.jumbotron  {*/
+    /*padding: 1rem 0;*/
+    /*!*background: #c0dce3;*!*/
+    /*background: #fff;*/
+/*}*/
+/*.jumbotron .row {*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+/*}*/
+/*.jumbotron .row .col {*/
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+/*}*/
 
 .vis-today {
     background: #8eb38e;
