@@ -158,7 +158,6 @@ var options = {
 // Create a Timeline
 var timeline = new vis.Timeline(container, items, options);
 
-
 /**
  * Always listening to events
  */
@@ -249,9 +248,6 @@ jQuery(document).on('ready', function () {
         })
     });
 
-
-    // Search
-    // todo, append all search results into an array of objects
     jQuery('form#searchEvents').bind('submit', function (ev) {
         ev.preventDefault();
         var jsonData = {};
@@ -281,10 +277,12 @@ jQuery(document).on('ready', function () {
             }
         })
     });
+
+
 });
 
 /**
- *
+ * Search JSON objects for a string inside content field
  *
  * @param data: JSON object
  * @param searchString: string
@@ -327,7 +325,7 @@ function displayResult(searchResult) {
     // todo: format start date to a more human readable format
     // todo: check if string is longer than substring length ? put ... : don't put ...
     // https://stackoverflow.com/questions/1265887/call-javascript-function-on-hyperlink-click?rq=1
-    searchResultDiv.insertAdjacentHTML('afterend', "<p>Date: "+ startDateIs +"<br />Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" + searchResult["content"].substring(0, 10) + "...</a></p>");
+    searchResultDiv.insertAdjacentHTML('afterend', "<p>Date: "+ startDateIs +"<br />Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" + searchResult["content"].substring(0, 25) + "...</a></p>");
 }
 
 /**
@@ -345,6 +343,48 @@ function moveWindow(startDate) {
     timeline.moveTo(startDate, moveToOptions);
 }
 
+/**
+ * Timeline  Navigation
+ *
+ * @param when: date to move which can be absolute or relative
+ */
+function gotoWhen(when) {
+    var moveToOptions = {
+        animation: {
+            duration: 500,
+            easingFunction: "easeInOutQuad"
+        }
+    };
+    var currentWindowTime = timeline.getWindow();
+    var start = currentWindowTime.start;
+    var date = moment(start);
+    var toAdd;
+    var toSubtract;
+    console.log(timeline.getWindow());
+    if (when === 'today') {
+        date = new Date();
+    } else if (when === 'tenYearsB') {
+        toSubtract = moment.duration(10, 'years');
+        date.subtract(toSubtract);
+    } else if (when === 'tenYearsF') {
+        toAdd = moment.duration(10, 'years');
+        date.add(toAdd);
+    } else if (when === 'hundredYearsB') {
+        toSubtract = moment.duration(100, 'years');
+        date.subtract(toSubtract);
+    } else if (when === 'hundredYearsF') {
+        toAdd = moment.duration(100, 'years');
+        date.add(toAdd);
+    }
+    timeline.moveTo(date, moveToOptions);
+}
+
+/**
+ * Serialize form data to JSON object and stringify
+ *
+ * @param form
+ * @constructor
+ */
 function ConvertFormToJSON(form) {
     var array = jQuery(form).serializeArray();
     var json = {};
@@ -375,7 +415,6 @@ function addEvent(itemObject) {
             console.log(data);
             console.log(jsonData);
         }
-
     });
 }
 
@@ -447,6 +486,8 @@ function checkPoint() {
 
 /**
  * jQuery Date Time Picker
+ *
+ * http://xdsoft.net/jqplugins/datetimepicker/
  */
 var dateTimePickerOptions = {
         format: 'Y-m-d',
@@ -474,6 +515,7 @@ function logEvent(event, properties) {
 
 /**
  * Pretty Prompts
+ *
  * @param title
  * @param text
  * @param callback
@@ -487,7 +529,6 @@ function prettyConfirm(title, text, callback) {
         confirmButtonColor: "#DD6B55"
     }, callback);
 }
-
 function prettyPrompt(title, text, inputValue, callback) {
     swal({
         title: title,
@@ -498,6 +539,9 @@ function prettyPrompt(title, text, inputValue, callback) {
     }, callback);
 }
 
+/**
+ * Generate png file for the current visjs window
+ */
 function generateImage() {
     html2canvas(document.getElementById("visualization"), {
         background: '#fff',
