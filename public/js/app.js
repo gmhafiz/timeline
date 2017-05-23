@@ -89,78 +89,82 @@ var options = {
 };
 
 
-// Individual's Name
-var group = [
-    {
-        id: '0',
-        content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>NEL, Pieter</h5>Position : Director SMO<br />Payroll ID: 110334<br />FTE: 1.00</div></div>'
-    },
-    {
-        id: '1',
-        content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>BOES Sabine</h5>Position : FACEM<br />Payroll ID: 326684<br />FTE: 1.00</div></div>'
-    },
-    {
-        id: '2',
-        content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>WEARNE, Jack</h5>Position : FACEM<br />Payroll ID: 10.04.17-14.04.17<br />FTE: 0.30</div></div>'
-    },
-    {
-        id: '3',
-        content: 'Giles, Andre'
-    },
-    {
-        id: '4',
-        content: 'NG, Lesley'
-    },
-    {
-        id: '5',
-        content: 'Mahani, Abbas'
-    },
-    {
-        id: '6',
-        content: 'Thornton, Neale'
-    }
-
-];
-
-
-var subGroup = [
-    {
-        id: '100',
-        content: 'RL'
-    },
-    {
-        id: '101',
-        content: 'ADMIN'
-    },
-    {
-        id: '102',
-        content: 'MC'
-    },
-    {
-        id: '103',
-        content: 'PIT A'
-    },
-    {
-        id: '104',
-        content: 'PIT B'
-    },
-    {
-        id: '105',
-        content: 'Fast Track'
-    },
-    {
-        id: '106',
-        content: 'NC'
-    }
-];
+// // Individual's Name
+// var group = [
+//     {
+//         id: '0',
+//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>NEL, Pieter</h5>Position : Director SMO<br />Payroll ID: 110334<br />FTE: 1.00</div></div>'
+//     },
+//     {
+//         id: '1',
+//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>BOES Sabine</h5>Position : FACEM<br />Payroll ID: 326684<br />FTE: 1.00</div></div>'
+//     },
+//     {
+//         id: '2',
+//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>WEARNE, Jack</h5>Position : FACEM<br />Payroll ID: 10.04.17-14.04.17<br />FTE: 0.30</div></div>'
+//     },
+//     {
+//         id: '3',
+//         content: 'Giles, Andre'
+//     },
+//     {
+//         id: '4',
+//         content: 'NG, Lesley'
+//     },
+//     {
+//         id: '5',
+//         content: 'Mahani, Abbas'
+//     },
+//     {
+//         id: '6',
+//         content: 'Thornton, Neale'
+//     }
+//
+// ];
+//
+//
+// var subGroup = [
+//     {
+//         id: '100',
+//         content: 'RL'
+//     },
+//     {
+//         id: '101',
+//         content: 'ADMIN'
+//     },
+//     {
+//         id: '102',
+//         content: 'MC'
+//     },
+//     {
+//         id: '103',
+//         content: 'PIT A'
+//     },
+//     {
+//         id: '104',
+//         content: 'PIT B'
+//     },
+//     {
+//         id: '105',
+//         content: 'Fast Track'
+//     },
+//     {
+//         id: '106',
+//         content: 'NC'
+//     }
+// ];
 
 // Create a Timeline
 var timeline = new vis.Timeline(container, items, options);
 
 
-
-
+/**
+ * Always listening to events
+ */
 jQuery(document).on('ready', function () {
+    /**
+     * Actions when submit button for the name 'addEvent' is clicked.
+     */
     jQuery('form#addEvent').bind('submit', function (ev) {
         ev.preventDefault();
         var form = this;
@@ -246,6 +250,7 @@ jQuery(document).on('ready', function () {
 
 
     // Search
+    // todo, append all search results into an array of objects
     jQuery('form#searchEvents').bind('submit', function (ev) {
         ev.preventDefault();
         var jsonData = {};
@@ -263,8 +268,9 @@ jQuery(document).on('ready', function () {
 
                 searchResult = searchContent(data, searchString);
                 console.log(searchResult);
-
-                displayResult(searchResult);
+                for (var i = 0; i < searchResult.length; i++) {
+                    displayResult(searchResult[i]);
+                }
 
             },
 
@@ -278,18 +284,25 @@ jQuery(document).on('ready', function () {
 
 /**
  *
- * @param data JSON object
- * @param searchString string
- * @returns {*} object
+ *
+ * @param data: JSON object
+ * @param searchString: string
+ * @returns Array: of object(s)
  */
 function searchContent (data, searchString) {
+    var escaped = escapeRegex(searchString);
+    var regexString = new RegExp(escaped, "gi");
+    var result = [];
+
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var arr = obj["content"];
         // for (var j = 0; j < arr.length; j++) {
-            if (arr === searchString) {
+        //     if (arr === searchString) {
+            if (regexString.test(arr)) {
                 console.log(obj);
-                return obj;
+                result.push(obj);
+                // return obj;
             }
             // if (arr[j] === searchString) {
             //     console.log(obj);
@@ -297,18 +310,38 @@ function searchContent (data, searchString) {
             // }
         // }
     }
+    return result;
 }
 
 /**
+ * Prints out html for one JSON object result
  *
  * @param searchResult One JSON object
  */
 function displayResult(searchResult) {
     var searchResultDiv = document.getElementById("searchResult");
-    var startDate = searchResult["start"];
+    var startDateIs = searchResult["start"];
+    var startDateIsQuotes = "'"+startDateIs+"'"; // need to put single quote around this date for link to work
 
-    timeline.moveTo(startDate);
-    searchResultDiv.innerHTML = JSON.stringify(searchResult);
+    // todo: format start date to a more human readable format
+    // todo: check if string is longer than substring length ? put ... : don't put ...
+    // https://stackoverflow.com/questions/1265887/call-javascript-function-on-hyperlink-click?rq=1
+    searchResultDiv.insertAdjacentHTML('afterend', "<p>Date: "+ startDateIs +"<br />Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" + searchResult["content"].substring(0, 10) + "...</a></p>");
+}
+
+/**
+ * Move vis window according to date
+ *
+ * @param startDate: a string surrounded by single quotes
+ */
+function moveWindow(startDate) {
+    var moveToOptions = {
+        animation: {
+            duration: 500,
+            easingFunction: "easeInQuad"
+        }
+    };
+    timeline.moveTo(startDate, moveToOptions);
 }
 
 function ConvertFormToJSON(form) {
@@ -459,4 +492,15 @@ function generateImage() {
         }
     });
 
+}
+
+/**
+ * Escape string for use in dynamically generated regex
+ *
+ * @param s
+ *
+ * https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+ */
+function escapeRegex (s) {
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
