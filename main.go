@@ -119,7 +119,7 @@ func main() {
 	}
 	api.SetApp(router)
 	http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
-	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
+	http.Handle("/timeline/", http.StripPrefix("/timeline", http.FileServer(http.Dir("./public"))))
 	fmt.Println("Serving at :8080")
 	log.Fatalln(http.ListenAndServe(":8080", nil))
 
