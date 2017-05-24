@@ -74,6 +74,33 @@ func (i *Impl) GetEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&event)
 }
 
+func (i *Impl) PutEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	event := Event{}
+	if i.DB.First(&event, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+
+	updated := Event{}
+	if err := r.DecodeJsonPayload(&updated); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	event.Content = updated.Content
+	event.Start = updated.Start
+	event.End = updated.End
+	event.Type = updated.Type
+	// todo update the rest of the struct fields
+
+	if err := i.DB.Save(&event).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteJson(&event)
+}
+
 func (i *Impl) DeleteEvent(w rest.ResponseWriter, r *rest.Request) {
 	id := r.PathParam("id")
 	event := Event{}
@@ -101,7 +128,7 @@ func main() {
 			//return origin == "https://www.gmhafiz.com"
 			return true
 		},
-		AllowedMethods: []string{"GET", "POST", "DELETE", "UPDATE", "OPTIONS"},
+		AllowedMethods: []string{"GET", "POST", "DELETE", "PUT", "OPTIONS"},
 		AllowedHeaders: []string {
 			"Accept", "Content-Type", "Origin"},
 		AccessControlAllowCredentials: true,
@@ -113,6 +140,7 @@ func main() {
 		rest.Get("/event/:id", i.GetEvent),
 		rest.Get("/events", i.GetAllEvents),
 		rest.Delete("/event/:id", i.DeleteEvent),
+		rest.Put("/event/:id", i.PutEvent),
 	)
 	if err != nil {
 		log.Fatalln(err)

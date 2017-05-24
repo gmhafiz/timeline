@@ -179,7 +179,6 @@ Example
 http DELETE http://localhost:8080/api/event/3
 ```
 
-
 Returns
 
 ```
@@ -191,9 +190,33 @@ X-Powered-By: go-json-rest
 
 ```
 
-### UPDATE
+### PUT
 
-todo
+    /api/event/:id
+    
+Example
+
+```bash
+http PUT http://localhost:8080/api/event/2 content="e4 updated"
+```
+
+Returns
+
+```
+HTTP/1.1 200 OK
+Content-Length: 177
+Content-Type: application/json; charset=utf-8
+Date: Wed, 24 May 2017 15:05:01 GMT
+X-Powered-By: go-json-rest
+
+{
+        "content": "e4 updated", 
+        "end": "2017-04-15", 
+        "id": 2, 
+        "start": "2017-04-14", 
+        "type": "point"
+}
+```
 
 ### TODO
 
@@ -208,7 +231,7 @@ todo
 - [x] Make frontend load `public/events.json` automatically
 - [x] Update timeline frontend automatically after submitting new event
 - [x] Viz timeline is populated from database immediately on page load
-- [ ] Do UPDATE http request
+- [x] Do UPDATE http request
 - [ ] moving or resizing event(s) updates the database
 
 ### Libraries

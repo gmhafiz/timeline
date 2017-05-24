@@ -32,12 +32,6 @@ var options = {
         remove: true,
         overrideItems: false
     },
-    minorLabels: {
-        year: 'Y'
-    },
-    majorLabels: {
-      year: 'YYYY'
-    },
 
     onRemove: function (item, callback) {
         prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
@@ -52,12 +46,13 @@ var options = {
     },
 
     onMove: function (item, callback) {
+        console.log(item);
         // prettyConfirm('Move Item', 'Do you really want to move the item to\n' +
         // 'start: ' + item.start + '\n' +
         // 'end: ' + item.end + '?', function (ok) {
         //     if (ok) {
         callback(item);
-        // todo: update db
+        updateEvent(item);
         //     } else {
         //         callback(null);
         //     }
@@ -398,7 +393,9 @@ function gotoWhen(when) {
     } else if (when === 'hundredThousandYearsF') {
         toAdd = moment.duration(100000, 'years');
         date.add(toAdd);
-    } else if (when === 'millionYearsB') { // fixme: million years not supported in momentjs/javascript/visjs?
+    } else if (when === 'millionYearsB') {
+        // fixme: million years not supported in momentjs/javascript/visjs?
+        // https://stackoverflow.com/questions/8860297/can-you-create-dates-that-are-lower-than-271800-bc-like-dinosaur-time
         toSubtract = moment.duration(1000000, 'years');
         date.subtract(toSubtract);
         console.log(toSubtract);
@@ -441,6 +438,26 @@ function addEvent(itemObject) {
             console.log(data);
             console.log(jsonData);
             items.add(data);
+        },
+        error: function (data) {
+            console.log(data);
+            console.log(jsonData);
+        }
+    });
+}
+
+function updateEvent(itemObject) {
+    var itemID = itemObject.id;
+    var jsonData = JSON.stringify(itemObject);
+    $.ajax({
+        type: "PUT",
+        url: baseURL + "api/event/" + itemID,
+        data: jsonData,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data);
+            console.log(jsonData);
         },
         error: function (data) {
             console.log(data);
