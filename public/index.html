@@ -35,7 +35,7 @@
     <section class="navbar-section">
         <a href="//www.gmhafiz.com" class="btn btn-link">Website</a>
         <a href="//www.twitter.com/gmhafiz" class="btn btn-link">Twitter</a>
-        <a href="//www.gmhafiz.com" class="btn btn-link">GitHub</a>
+        <a href="//github.com/gmhafiz/timeline" class="btn btn-link">GitHub</a>
     </section>
 </header>
 
@@ -50,11 +50,19 @@
     <div id="timelineNavigation" class="columns">
         <div class="col centered">
             <div class="btn-group btn-group-block">
-                <button id="hundredYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>100Y</button>
+                <!--<button id="millionYearsB" class="btn btn-sm tooltip" data-tooltip="A Million Years Ago" type="submit" onclick="gotoWhen('millionThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>-->
+                <button id="hundredThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Ago" type="submit" onclick="gotoWhen('hundredThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>
+                <button id="tenThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Ten Thousand Years Ago" type="submit" onclick="gotoWhen('tenThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>
+                <button id="thousandYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('thousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>1000</button>
+                <button id="hundredYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>100</button>
                 <button id="tenYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsB');"><i class="icon icon-arrow-left"></i>10 Years</button>
-                <button id="gotoNow" class="btn btn-sm" type="submit" onclick="gotoWhen('today');">Now</button>
+                <button id="gotoNow" class="btn btn-sm" type="submit" onclick="gotoWhen('today');">Today</button>
                 <button id="tenYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsF');">10 Years <i class="icon icon-arrow-right"></i></button>
-                <button id="hundredYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsF');">100Y<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <button id="hundredYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsF');">100<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <button id="thousandYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('thousandYearsF');">1000<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <button id="tenThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Ten Thousand Years Forward" type="submit" onclick="gotoWhen('tenThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <button id="hundredThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Forward" type="submit" onclick="gotoWhen('hundredThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <!--<button id="millionYearsF" class="btn btn-sm tooltip" data-tooltip="Million Years Forward" type="submit" onclick="gotoWhen('millionThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>-->
             </div>
         </div>
     </div>
@@ -67,7 +75,7 @@
                         <label class="form-label" for="content">Event</label>
                     </div>
                     <div class="col-9">
-                        <textarea id="content" type="text" class="form-input" name="content" rows="5"></textarea>
+                        <textarea id="content" type="text" class="form-input" name="content" rows="3"></textarea>
                     </div>
                 </div>
 

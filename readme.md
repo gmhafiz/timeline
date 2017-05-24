@@ -1,7 +1,7 @@
 # timeline vis.js
 
 ## Introduction
-Display your own timeline history using [vis.js](http://visjs.org). 
+Display your own timeline history using [vis.js](https://visjs.org). 
 
 Features:
  - Backend is powered with golang with RESTful api [https://github.com/ant0ine/go-json-rest](https://github.com/ant0ine/go-json-rest)
@@ -213,13 +213,13 @@ todo
 
 ### Libraries
 
-- [vis.js/docs/timeline](http://visjs.org).
+- [vis.js/docs/timeline](https://visjs.org/docs/timeline/).
 - [https://github.com/ant0ine/go-json-rest](https://github.com/ant0ine/go-json-rest) json REST library 
-- [sqlite3 driver](github.com/mattn/go-sqlite3)
+- [sqlite3 driver](https://github.com/mattn/go-sqlite3)
 - [gorm orm](https://github.com/jinzhu/gorm)
-- [sweetalert](http://t4t5.github.io/sweetalert)
+- [sweetalert](https://t4t5.github.io/sweetalert)
 - [spectre css](https://picturepan2.github.io/spectre/index.html)
-- [moment js](http://momentjs.com/)
+- [moment js](https://momentjs.com/)
 
 ### Credits || References
 
@@ -228,7 +228,7 @@ todo
 - https://stackoverflow.com/questions/9688660/send-json-from-html-form-with-nodejs-backend
 - https://github.com/gin-gonic/gin/issues/75
 - https://medium.com/@etiennerouzeaud/how-to-create-a-basic-restful-api-in-go-c8e032ba3181#.a9e3jjgwl
-- http://phalt.co/a-simple-api-in-go/
+- https://phalt.co/a-simple-api-in-go/
 - https://httpie.org/ -  CLI, cURL-like tool for humans
-- http://thenewstack.io/make-a-restful-json-api-go/
+- https://thenewstack.io/make-a-restful-json-api-go/
 - https://stevenwhite.com/building-a-rest-service-with-golang-2/

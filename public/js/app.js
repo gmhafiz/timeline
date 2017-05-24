@@ -32,12 +32,17 @@ var options = {
         remove: true,
         overrideItems: false
     },
+    minorLabels: {
+        year: 'Y'
+    },
+    majorLabels: {
+      year: 'YYYY'
+    },
 
     onRemove: function (item, callback) {
         prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
             if (ok) {
                 callback(item);
-                // todo: update db
                 console.log("removed item id: " + item.id);
                 deleteItemDB(item.id);
             } else {
@@ -375,6 +380,32 @@ function gotoWhen(when) {
     } else if (when === 'hundredYearsF') {
         toAdd = moment.duration(100, 'years');
         date.add(toAdd);
+    } else if (when === 'thousandYearsB') {
+        toSubtract = moment.duration(1000, 'years');
+        date.subtract(toSubtract);
+    } else if (when === 'thousandYearsF') {
+        toAdd = moment.duration(1000, 'years');
+        date.add(toAdd);
+    } else if (when === 'tenThousandYearsB') {
+        toSubtract = moment.duration(10000, 'years');
+        date.subtract(toSubtract);
+    } else if (when === 'tenThousandYearsF') {
+        toAdd = moment.duration(10000, 'years');
+        date.add(toAdd);
+    } else if (when === 'hundredThousandYearsB') {
+        toSubtract = moment.duration(100000, 'years');
+        date.subtract(toSubtract);
+    } else if (when === 'hundredThousandYearsF') {
+        toAdd = moment.duration(100000, 'years');
+        date.add(toAdd);
+    } else if (when === 'millionYearsB') { // fixme: million years not supported in momentjs/javascript/visjs?
+        toSubtract = moment.duration(1000000, 'years');
+        date.subtract(toSubtract);
+        console.log(toSubtract);
+    } else if (when === 'millionYearsF') {
+        toAdd = moment.duration(1000000, 'years');
+        date.add(toAdd);
+        console.log(toAdd);
     }
     timeline.moveTo(date, moveToOptions);
 }
@@ -459,8 +490,6 @@ function deleteItemDB(id) {
         }
     })
 }
-
-// todo: onBlur for end date label, switch the radio button type to be for range or point. adjust json data too?
 
 function hideEndDateDiv() {
     var endDateDiv = document.getElementById("endDateDiv");
