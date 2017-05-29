@@ -1,31 +1,14 @@
 var baseURL = "http://localhost:8080/";
 // var baseURL =  "https://www.gmhafiz.com/";
 
-// DOM element where the Timeline will be attached
-var container = document.getElementById('visualization');
-
-// Create a DataSet (allows two way data-binding)
-var items = new vis.DataSet(getAllEvents()
-//     [
-//     {id: 1, content: 'item 1', start: '2017-04-20'},
-//     {id: 2, content: 'item 2', start: '2017-04-14'},
-//     {id: 3, content: 'item 3', start: '2017-04-18'},
-//     {id: 4, content: 'item 4', start: '2017-04-16', end: '2017-04-19'},
-//     {id: 5, content: 'item 5', start: '2017-04-25'},
-//     {id: 6, content: 'item 6', start: '2017-04-27'}
-// ]
-
-//     [{"id":4,"content":"t1","start":"2017-04-16","end":"2017-04-19","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:14:44.166869942+10:00","updatedAt":"2017-04-17T02:14:44.166869942+10:00"},{"id":5,"content":"t1","start":"2017-04-16","end":"2017-04-19","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:14:46.095823387+10:00","updatedAt":"2017-04-17T02:14:46.095823387+10:00"},{"id":6,"content":"t1sfaf","start":"2017-04-16","end":"2017-04-19","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:15:17.604591386+10:00","updatedAt":"2017-04-17T02:15:17.604591386+10:00"},{"id":7,"content":"t1","start":"2017-04-16","end":"2017-04-19","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:18:58.109212081+10:00","updatedAt":"2017-04-17T02:18:58.109212081+10:00"},{"id":8,"content":"t1","start":"2017-04-16","end":"2017-04-19","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:23:13.554703373+10:00","updatedAt":"2017-04-17T02:23:13.554703373+10:00"},{"id":9,"content":"t1","start":"2017-04-17","end":"2017-04-20","type":"","title":"","group":"","subgroup":"","style":"","createdAt":"2017-04-17T02:23:22.393150852+10:00","updatedAt":"2017-04-17T02:23:22.393150852+10:00"}]
-);
-
-// -100,000 years ago tp present
-// Configuration for the Timeline
+// from -1,000,000 to -100,000
+var container = document.getElementById('visualizationA');
+var items = new vis.DataSet(getAllEvents());
 var options = {
     width: '100%',
     height: '40vh',
     selectable: true,
     autoResize: true,
-    min: "-100000-01-01",
     editable: {
         add: true,
         updateTime: true,
@@ -33,6 +16,19 @@ var options = {
         remove: true,
         overrideItems: false
     },
+    max: "-000100-12-31",
+    min: "-001000-01-01",
+    showCurrentTime: false,
+    zoomMin: 220752000000,
+    format: {// https://github.com/almende/vis/issues/307
+        minorLabels: {
+            year: 'Y,SSS'
+        },
+        majorLabels: {
+            // year: 'Y,SSS' // xxx,xxx years ago -200,000
+        }
+    },
+
     onRemove: function (item, callback) {
         prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function (ok) {
             if (ok) {
@@ -88,74 +84,6 @@ var options = {
         // });
     }
 };
-
-
-// // Individual's Name
-// var group = [
-//     {
-//         id: '0',
-//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>NEL, Pieter</h5>Position : Director SMO<br />Payroll ID: 110334<br />FTE: 1.00</div></div>'
-//     },
-//     {
-//         id: '1',
-//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>BOES Sabine</h5>Position : FACEM<br />Payroll ID: 326684<br />FTE: 1.00</div></div>'
-//     },
-//     {
-//         id: '2',
-//         content: '<div class="media"><img class="d-flex mr-3" src="images/100x100.png" width=100 height=100 alt=""><div class="media-body"><h5>WEARNE, Jack</h5>Position : FACEM<br />Payroll ID: 10.04.17-14.04.17<br />FTE: 0.30</div></div>'
-//     },
-//     {
-//         id: '3',
-//         content: 'Giles, Andre'
-//     },
-//     {
-//         id: '4',
-//         content: 'NG, Lesley'
-//     },
-//     {
-//         id: '5',
-//         content: 'Mahani, Abbas'
-//     },
-//     {
-//         id: '6',
-//         content: 'Thornton, Neale'
-//     }
-//
-// ];
-//
-//
-// var subGroup = [
-//     {
-//         id: '100',
-//         content: 'RL'
-//     },
-//     {
-//         id: '101',
-//         content: 'ADMIN'
-//     },
-//     {
-//         id: '102',
-//         content: 'MC'
-//     },
-//     {
-//         id: '103',
-//         content: 'PIT A'
-//     },
-//     {
-//         id: '104',
-//         content: 'PIT B'
-//     },
-//     {
-//         id: '105',
-//         content: 'Fast Track'
-//     },
-//     {
-//         id: '106',
-//         content: 'NC'
-//     }
-// ];
-
-// Create a Timeline
 var timeline = new vis.Timeline(container, items, options);
 
 /**
@@ -203,7 +131,7 @@ jQuery(document).on('ready', function () {
 
         $.ajax({
             type: "POST",
-            url: baseURL + "api/event",
+            url: baseURL + "api/ancientEvent",
             data: jsonData,
             dataType: "json",
             contentType: "application/json",
@@ -229,7 +157,7 @@ jQuery(document).on('ready', function () {
         var payloadTextArea = document.getElementById("payload");
         $.ajax({
             type: "GET",
-            url: baseURL + "api/events",
+            url: baseURL + "api/ancientEvents",
             data: jsonData,
             dataType: "json",
             success: function (data) {
@@ -240,7 +168,6 @@ jQuery(document).on('ready', function () {
                 items.clear();
                 items.add(data);
                 timeline.redraw();
-                timelineA.redraw();
             },
             error: function (data) {
                 console.log(data);
@@ -254,10 +181,9 @@ jQuery(document).on('ready', function () {
         var jsonData = {};
         var searchString = document.getElementById("searchString").value;
         var searchResult = [];
-        // var patt = /w3schools/i;
         $.ajax({
             type: "GET",
-            url: baseURL + "api/events",
+            url: baseURL + "api/ancientEvents",
             data: jsonData,
             dataType: "json",
             success: function (data) {
@@ -278,8 +204,6 @@ jQuery(document).on('ready', function () {
             }
         })
     });
-
-
 });
 
 /**
@@ -299,15 +223,15 @@ function searchContent (data, searchString) {
         var arr = obj["content"];
         // for (var j = 0; j < arr.length; j++) {
         //     if (arr === searchString) {
-            if (regexString.test(arr)) {
-                console.log(obj);
-                result.push(obj);
-                // return obj;
-            }
-            // if (arr[j] === searchString) {
-            //     console.log(obj);
-            //     return obj;
-            // }
+        if (regexString.test(arr)) {
+            console.log(obj);
+            result.push(obj);
+            // return obj;
+        }
+        // if (arr[j] === searchString) {
+        //     console.log(obj);
+        //     return obj;
+        // }
         // }
     }
     return result;
@@ -342,7 +266,6 @@ function moveWindow(startDate) {
         }
     };
     timeline.moveTo(startDate, moveToOptions);
-    timelineA.moveTo(startDate, moveToOptions);
 }
 
 /**
@@ -432,7 +355,7 @@ function addEvent(itemObject) {
 
     $.ajax({
         type: "POST",
-        url: baseURL + "api/event",
+        url: baseURL + "api/ancientEvent",
         data: jsonData,
         dataType: "json",
         contentType: "application/json",
@@ -453,7 +376,7 @@ function updateEvent(itemObject) {
     var jsonData = JSON.stringify(itemObject);
     $.ajax({
         type: "PUT",
-        url: baseURL + "api/event/" + itemID,
+        url: baseURL + "api/ancientEvent/" + itemID,
         data: jsonData,
         dataType: "json",
         contentType: "application/json",
@@ -472,7 +395,7 @@ function getAllEvents() {
     var jsonData = {};
     $.ajax({
         type: "GET",
-        url: baseURL + "api/events",
+        url: baseURL + "api/ancientEvents",
         data: jsonData,
         dataType: "json",
         success: function (data) {
@@ -493,7 +416,7 @@ function getAllEvents() {
 function deleteItemDB(id) {
     $.ajax({
         type: "DELETE",
-        url: baseURL + "api/event/" + id,
+        url: baseURL + "api/ancientEvent/" + id,
         data: null,
         dataType: "json",
         contentType: "application/json",
@@ -538,9 +461,9 @@ function checkPoint() {
  * http://xdsoft.net/jqplugins/datetimepicker/
  */
 var dateTimePickerOptions = {
-        format: 'Y-m-d',
-        timepicker: false,
-        allowBlack: false
+    format: 'Y-m-d',
+    timepicker: false,
+    allowBlack: false
 };
 jQuery('#startDate').datetimepicker(dateTimePickerOptions);
 jQuery('#endDate').datetimepicker(dateTimePickerOptions);
@@ -591,7 +514,7 @@ function prettyPrompt(title, text, inputValue, callback) {
  * Generate png file for the current visjs window
  */
 function generateImage() {
-    html2canvas(document.getElementById("visualization"), {
+    html2canvas(document.getElementById("visualizationA"), {
         background: '#fff',
         onrendered: function (canvas) {
             // var img = canvas.toDataURL('image/jpeg');
@@ -618,3 +541,4 @@ function generateImage() {
 function escapeRegex (s) {
     return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
+

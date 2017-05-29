@@ -20,8 +20,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.css" rel="stylesheet"
           type="text/css"/>
     <link rel="stylesheet" type="text/css" href="css/datetimepicker.css">
-
-
 </head>
 <body>
 
@@ -42,11 +40,9 @@
     </section>
 </header>
 
-<!--todo: thin progress bar that spans 14bya with 3 colour coded era: cosmological, ancient, normal. the bar reflects vis window-->
-
-<div id="timeline" class="container">
+<div id="timelineA" class="container">
     <div class="columns">
-        <div class="column xs-12" id="visualization"></div>
+        <div class="column xs-12" id="visualizationA"></div>
     </div>
 </div>
 
@@ -55,17 +51,13 @@
         <div class="col centered">
             <div class="btn-group btn-group-block">
                 <!--<button id="millionYearsB" class="btn btn-sm tooltip" data-tooltip="A Million Years Ago" type="submit" onclick="gotoWhen('millionThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>-->
-                <button id="hundredThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Ago" type="submit" onclick="gotoWhen('hundredThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>
-                <button id="tenThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Ten Thousand Years Ago" type="submit" onclick="gotoWhen('tenThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>
-                <button id="thousandYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('thousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>1000</button>
-                <button id="hundredYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>100</button>
-                <button id="tenYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsB');"><i class="icon icon-arrow-left"></i>10 Years</button>
-                <button id="gotoNow" class="btn btn-sm" type="submit" onclick="gotoWhen('today');">Today</button>
-                <button id="tenYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsF');">10 Years <i class="icon icon-arrow-right"></i></button>
-                <button id="hundredYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('hundredYearsF');">100<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
-                <button id="thousandYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('thousandYearsF');">1000<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
-                <button id="tenThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Ten Thousand Years Forward" type="submit" onclick="gotoWhen('tenThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
-                <button id="hundredThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Forward" type="submit" onclick="gotoWhen('hundredThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <!--<button id="hundredThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Ago" type="submit" onclick="gotoWhen('hundredThousandYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>-->
+                <button id="tenThousandYearsB" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Ago" type="submit" onclick="gotoWhen('hundredYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i></button>
+                <button id="thousandYearsB" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsB');"><i class="icon icon-arrow-left"></i><i class="icon icon-arrow-left"></i>10 thousand</button>
+                <!--<button id="gotoNow" class="btn btn-sm" type="submit" onclick="gotoWhen('today');">Today</button>-->
+                <button id="thousandYearsF" class="btn btn-sm" type="submit" onclick="gotoWhen('tenYearsF');">10 thousand<i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <button id="tenThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Forward" type="submit" onclick="gotoWhen('hundredYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>
+                <!--<button id="hundredThousandYearsF" class="btn btn-sm tooltip" data-tooltip="Hundred Thousand Years Forward" type="submit" onclick="gotoWhen('hundredThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>-->
                 <!--<button id="millionYearsF" class="btn btn-sm tooltip" data-tooltip="Million Years Forward" type="submit" onclick="gotoWhen('millionThousandYearsF');"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-right"></i></button>-->
             </div>
         </div>
@@ -165,23 +157,23 @@
     <div class="divider"></div>
     <div class="columns">
         <!--<div class="column col-sm-6 col-md-6">-->
-            <!--<h5>Get All Events in JSON</h5>-->
-            <!--<form class="form-horizontal" id="getAllEvents">-->
-                <!--<div class="form-group">-->
-                    <!--<div class="col-3">-->
-                        <!--<label class="form-label" for="payload">Event JSON</label>-->
-                    <!--</div>-->
-                    <!--<div class="col-9">-->
-                        <!--<textarea id="payload" type="text" class="form-input" name="payload" rows="5"></textarea>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<div class="col-3"></div>-->
-                    <!--<div class="col-9">-->
-                        <!--<button type="submit" class="btn btn-primary">Get All Events</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
+        <!--<h5>Get All Events in JSON</h5>-->
+        <!--<form class="form-horizontal" id="getAllEvents">-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-3">-->
+        <!--<label class="form-label" for="payload">Event JSON</label>-->
+        <!--</div>-->
+        <!--<div class="col-9">-->
+        <!--<textarea id="payload" type="text" class="form-input" name="payload" rows="5"></textarea>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-3"></div>-->
+        <!--<div class="col-9">-->
+        <!--<button type="submit" class="btn btn-primary">Get All Events</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
         <!--</div>-->
         <div class="column col-sm-6 col-md-6">
             <h5>Event Log:</h5>
@@ -190,18 +182,18 @@
     </div>
 </div>
 <!--<div class="container">-->
-    <!--<div class="columns">-->
-        <!--<div class="column col-sm-12">-->
-            <!--<div id="log"></div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="columns">-->
+<!--<div class="column col-sm-12">-->
+<!--<div id="log"></div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="js/jquery.datetimepicker.full.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.js"></script>
 
-<script src="js/app.js"></script>
+<script src="js/appAncient.js"></script>
 
 </body>
 </html>

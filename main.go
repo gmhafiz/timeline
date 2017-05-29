@@ -28,6 +28,24 @@ type (
 
 	}
 
+	AncientEvent struct {
+		Id		int64		`json:"id"`
+		Content		string		`sql:"size:1024" json:"content"`
+		Start		string		`json:"start"`
+		End		string		`json:"end"`
+		Type		string		`json:"type"`
+		ClassName	string		`json:"className"`
+	}
+
+	CosmologicalEvent struct {
+		Id		int64		`json:"id"`
+		Content		string		`sql:"size:1024" json:"content"`
+		Start		string		`json:"start"`
+		End		string		`json:"end"`
+		Type		string		`json:"type"`
+		ClassName	string		`json:"className"`
+	}
+
 	Impl struct {
 		DB *gorm.DB
 	}
@@ -44,6 +62,8 @@ func (i *Impl) InitDB() {
 
 func (i *Impl) InitSchema() {
 	i.DB.AutoMigrate(&Event{})
+	i.DB.AutoMigrate(&AncientEvent{})
+	i.DB.AutoMigrate(&CosmologicalEvent{})
 }
 
 func (i *Impl) PostEvent(w rest.ResponseWriter, r *rest.Request) {
@@ -58,10 +78,46 @@ func (i *Impl) PostEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&event)
 }
 
+func (i *Impl) PostAncientEvent(w rest.ResponseWriter, r *rest.Request) {
+	ancientEvent := AncientEvent{}
+	if err := r.DecodeJsonPayload(&ancientEvent); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := i.DB.Save(&ancientEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	w.WriteJson(&ancientEvent)
+}
+
+func (i *Impl) PostCosmologicalEvent(w rest.ResponseWriter, r *rest.Request) {
+	cosmologicalEvent := CosmologicalEvent{}
+	if err := r.DecodeJsonPayload(&cosmologicalEvent); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := i.DB.Save(&cosmologicalEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	w.WriteJson(&cosmologicalEvent)
+}
+
 func( i* Impl) GetAllEvents(w rest.ResponseWriter, r *rest.Request) {
 	events := []Event{}
 	i.DB.Find(&events)
 	w.WriteJson(&events)
+}
+
+func( i* Impl) GetAllAncientEvents(w rest.ResponseWriter, r *rest.Request) {
+	ancientEvents := []AncientEvent{}
+	i.DB.Find(&ancientEvents)
+	w.WriteJson(&ancientEvents)
+}
+
+func( i* Impl) GetAllCosmologicalEvents(w rest.ResponseWriter, r *rest.Request) {
+	cosmologicalEvents := []CosmologicalEvent{}
+	i.DB.Find(&cosmologicalEvents)
+	w.WriteJson(&cosmologicalEvents)
 }
 
 func (i *Impl) GetEvent(w rest.ResponseWriter, r *rest.Request) {
@@ -72,6 +128,26 @@ func (i *Impl) GetEvent(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 	w.WriteJson(&event)
+}
+
+func (i *Impl) GetAncientEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	ancientEvent := AncientEvent{}
+	if i.DB.First(&ancientEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	w.WriteJson(&ancientEvent)
+}
+
+func (i *Impl) GetCosmologicalEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	cosmologicalEvent := CosmologicalEvent{}
+	if i.DB.First(&cosmologicalEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	w.WriteJson(&cosmologicalEvent)
 }
 
 func (i *Impl) PutEvent(w rest.ResponseWriter, r *rest.Request) {
@@ -101,6 +177,58 @@ func (i *Impl) PutEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&event)
 }
 
+func (i *Impl) PutAncientEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	ancientEvent := AncientEvent{}
+	if i.DB.First(&ancientEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+
+	updated := AncientEvent{}
+	if err := r.DecodeJsonPayload(&updated); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	ancientEvent.Content = updated.Content
+	ancientEvent.Start = updated.Start
+	ancientEvent.End = updated.End
+	ancientEvent.Type = updated.Type
+
+	if err := i.DB.Save(&ancientEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteJson(&ancientEvent)
+}
+
+func (i *Impl) PutCosmologicalEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	cosmologicalEvent := CosmologicalEvent{}
+	if i.DB.First(&cosmologicalEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+
+	updated := CosmologicalEvent{}
+	if err := r.DecodeJsonPayload(&updated); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	cosmologicalEvent.Content = updated.Content
+	cosmologicalEvent.Start = updated.Start
+	cosmologicalEvent.End = updated.End
+	cosmologicalEvent.Type = updated.Type
+
+	if err := i.DB.Save(&cosmologicalEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteJson(&cosmologicalEvent)
+}
+
 func (i *Impl) DeleteEvent(w rest.ResponseWriter, r *rest.Request) {
 	id := r.PathParam("id")
 	event := Event{}
@@ -114,6 +242,35 @@ func (i *Impl) DeleteEvent(w rest.ResponseWriter, r *rest.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 }
+
+func (i *Impl) DeleteAncientEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	ancientEvent := AncientEvent{}
+	if i.DB.First(&ancientEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	if err := i.DB.Delete(&ancientEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+func (i *Impl) DeleteCosmologicalEvent(w rest.ResponseWriter, r *rest.Request) {
+	id := r.PathParam("id")
+	cosmologicalEvent := CosmologicalEvent{}
+	if i.DB.First(&cosmologicalEvent, id).Error != nil {
+		rest.NotFound(w, r)
+		return
+	}
+	if err := i.DB.Delete(&cosmologicalEvent).Error; err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
 
 func main() {
 	i := Impl{}
@@ -141,6 +298,18 @@ func main() {
 		rest.Get("/events", i.GetAllEvents),
 		rest.Delete("/event/:id", i.DeleteEvent),
 		rest.Put("/event/:id", i.PutEvent),
+
+		rest.Post("/ancientEvent", i.PostAncientEvent),
+		rest.Get("/anceintEvent/:id", i.GetAncientEvent),
+		rest.Get("/ancientEvents", i.GetAllAncientEvents),
+		rest.Delete("/ancientEvent/:id", i.DeleteAncientEvent),
+		rest.Put("/ancientEvent/:id", i.PutAncientEvent),
+
+		rest.Post("/cosmologicalEvent", i.PostCosmologicalEvent),
+		rest.Get("/cosmologicalEvent/:id", i.GetCosmologicalEvent),
+		rest.Get("/cosmologicalEvents", i.GetAllCosmologicalEvents),
+		rest.Delete("/cosmologicalEvent/:id", i.DeleteCosmologicalEvent),
+		rest.Put("/cosmologicalEvent/:id", i.PutCosmologicalEvent),
 	)
 	if err != nil {
 		log.Fatalln(err)
