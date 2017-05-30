@@ -62,6 +62,9 @@ gulp.task('css', function() {
     // if (!devBuild) {
     //     postCssOpts.push(cssnano);
     // }
+    gulp.src('dev/css/**/*.css')
+        .pipe(gulp.dest('public/css'));
+
     return gulp.src(folder.src + 'scss/main.scss')
         .pipe(sass({
             outputStyle: 'nested',
