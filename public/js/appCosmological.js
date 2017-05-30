@@ -86,6 +86,15 @@ var options = {
 };
 var timeline = new vis.Timeline(container, items, options);
 
+
+/**
+ * Gets the current time range for the current window timeline. Used for Top Timeline Bar.
+ */
+timeline.on('rangechanged', function (properties) {
+    console.log(timeline.getWindow());
+});
+
+
 /**
  * Always listening to events
  */
