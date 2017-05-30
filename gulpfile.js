@@ -15,6 +15,8 @@ var gulp = require('gulp'),
     path = require('path'),
     jsmin = require('gulp-jsmin'),
     replace = require('gulp-replace'),
+    scpClient = require('scp2'),
+    config = require('./config.json'),
 
     devBuild = (process.env.NODE_ENV !== 'production'),
     folder = {
@@ -100,6 +102,10 @@ gulp.task('jsProd', function () {
 });
 
 
+gulp.task('deploy', [], function () {
+    scpClient.scp('public', config.TEMPADDR, function (err) {});
+});
+
 // run all tasks
 gulp.task('prod', ['images', 'js', 'css', 'html', 'jsProd']);
 
@@ -112,4 +118,4 @@ gulp.task('watch', function () {
 });
 
 // default
-gulp.task('default', ['prod']);
+gulp.task('default', ['prod', 'deploy']);

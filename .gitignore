@@ -12,6 +12,8 @@ timeline
 *.iml
 node_modules
 public
+config.json
+backup_deploy.sh
 
 # User-specific stuff:
 .idea/**/workspace.xml
