@@ -12,6 +12,8 @@ var gulp = require('gulp'),
     autoprefixer = require('autoprefixer'),
     mqpacker = require('css-mqpacker'),
     cssnano = require('cssnano'),
+    path = require('path'),
+    jsmin = require('gulp-jsmin'),
     replace = require('gulp-replace'),
 
     devBuild = (process.env.NODE_ENV !== 'production'),
@@ -80,8 +82,23 @@ gulp.task('html', function () {
         .pipe(gulp.dest('public'));
 });
 
+
+// Change all localhost url to prod url
+var URL = 'https://www.gmhafiz.com/';
+var SOURCE = 'dev';
+var BUILD = 'public';
+gulp.task('jsProd', function () {
+   // gulp.src(folder.src + 'js/app.js')
+   //     .pipe(replace('http://localhost:8080/' , 'https://www.gmhafiz.com/'))
+    return gulp.src(path.join(SOURCE, '**/*.js'))
+        // .pipe(jsmin())
+        .pipe(replace('http://localhost:8080/', URL))
+        .pipe(gulp.dest(BUILD))
+});
+
+
 // run all tasks
-gulp.task('run', ['images', 'js', 'css', 'html']);
+gulp.task('prod', ['images', 'js', 'css', 'html', 'jsProd']);
 
 // watch
 gulp.task('watch', function () {
@@ -92,4 +109,4 @@ gulp.task('watch', function () {
 });
 
 // default
-gulp.task('default', ['run', 'watch']);
+gulp.task('default', ['prod']);

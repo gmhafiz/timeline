@@ -11,6 +11,7 @@ Features:
  - Simple frontend with bootstrap and ajax for form data binding
  - ability to serve frontend static HTML + CSS + JS
  - Javascript checking if the event type is a range or type based on checkbox and if end date is entered or not
+ - Uses gulp task runner
  
 
 ## Motivation
@@ -34,6 +35,7 @@ There are two ways of obtaining the code.
 3. go to `http://localhost:8080/timeline` to access frontend
 4. (Optional) install httpie `sudo apt install httpie` for http queries
 5. Follow examples below
+6. run `gulp` for production. Must edit `URL` variable first
 
 
 ## API
