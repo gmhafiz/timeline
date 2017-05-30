@@ -11,6 +11,7 @@
 timeline
 *.iml
 node_modules
+public
 
 # User-specific stuff:
 .idea/**/workspace.xml

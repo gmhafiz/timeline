@@ -1,0 +1,83 @@
+html {
+  font-size: 14px;
+}
+
+body {
+  background: #eaeaea;
+  /*background: #fff;*/
+}
+
+#timeline {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#visualization {
+  /*background: #cdebf3;*/
+  background: #fff;
+}
+
+/*.jumbotron  {*/
+/*padding: 1rem 0;*/
+/*!*background: #c0dce3;*!*/
+/*background: #fff;*/
+/*}*/
+/*.jumbotron .row {*/
+/*margin-left: 0;*/
+/*margin-right: 0;*/
+/*}*/
+/*.jumbotron .row .col {*/
+/*padding-left: 0;*/
+/*padding-right: 0;*/
+/*}*/
+
+/*.vis-today {*/
+/*background: #8eb38e;*/
+/*}*/
+
+.vis-point .vis-item-content {
+  background: #d5ddf6;
+  border: 1px #97b0f8;
+}
+
+/*Shift's type*/
+.rl .vis-item-overflow {
+  background-color: #07cadd;
+}
+
+.admin .vis-item-overflow {
+  background-color: #dd4840;
+}
+
+.mc .vis-item-overflow {
+  background-color: #f4f4f4;
+}
+
+.oncall .vis-item-overflow {
+  background-color: #dd883c;
+}
+
+.pita .vis-item-overflow {
+  background-color: #f4f4f4;
+}
+
+.pitb .vis-item-overflow {
+  background-color: #6bdd19;
+}
+
+.fasttrack .vis-item-overflow {
+  background-color: #dcdd77;
+}
+
+.nc .vis-item-overflow {
+  background-color: #dd7594;
+}
+
+#timelineNavigation {
+  background-color: #5764c6;
+}
+
+canvas {
+  width: 90%;
+  /*padding: 0  3rem;*/
+}
