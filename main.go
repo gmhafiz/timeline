@@ -300,7 +300,7 @@ func main() {
 		rest.Put("/event/:id", i.PutEvent),
 
 		rest.Post("/ancientEvent", i.PostAncientEvent),
-		rest.Get("/anceintEvent/:id", i.GetAncientEvent),
+		rest.Get("/ancientEvent/:id", i.GetAncientEvent),
 		rest.Get("/ancientEvents", i.GetAllAncientEvents),
 		rest.Delete("/ancientEvent/:id", i.DeleteAncientEvent),
 		rest.Put("/ancientEvent/:id", i.PutAncientEvent),
@@ -316,6 +316,7 @@ func main() {
 	}
 	api.SetApp(router)
 	http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
+	http.Handle("/timeline-dev/", http.StripPrefix("/timeline-dev", http.FileServer(http.Dir("./dev"))))
 	http.Handle("/timeline/", http.StripPrefix("/timeline", http.FileServer(http.Dir("./public"))))
 	fmt.Println("Serving at :8080")
 	log.Fatalln(http.ListenAndServe(":8080", nil))
