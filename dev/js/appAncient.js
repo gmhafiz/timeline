@@ -370,6 +370,7 @@ function addEvent(itemObject) {
             console.log(data);
             console.log(jsonData);
             items.add(data);
+            timeline.redraw();
         },
         error: function (data) {
             console.log(data);
@@ -390,6 +391,7 @@ function updateEvent(itemObject) {
         success: function (data) {
             console.log(data);
             console.log(jsonData);
+            timeline.redraw();
         },
         error: function (data) {
             console.log(data);
@@ -429,6 +431,7 @@ function deleteItemDB(id) {
         contentType: "application/json",
         success: function () {
             console.log("Removed item :" + id);
+            timeline.redraw();
         },
         error: function (data) {
             if (data.status !== 200) {
@@ -472,8 +475,8 @@ var dateTimePickerOptions = {
     timepicker: false,
     allowBlack: false
 };
-jQuery('#startDate').datetimepicker(dateTimePickerOptions);
-jQuery('#endDate').datetimepicker(dateTimePickerOptions);
+// jQuery('#startDate').datetimepicker(dateTimePickerOptions);
+// jQuery('#endDate').datetimepicker(dateTimePickerOptions);
 
 
 /**
