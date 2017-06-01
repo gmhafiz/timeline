@@ -78,6 +78,7 @@ gulp.task('css', function() {
             }
         }))
         // .pipe(postcss(postCssOpts))
+        // .pipe(cssnano())
         .pipe(gulp.dest(folder.build + 'css/'));
 });
 
@@ -101,11 +102,6 @@ gulp.task('jsProd', function () {
         .pipe(gulp.dest(BUILD))
 });
 
-
-gulp.task('deploy', [], function () {
-    scpClient.scp('public', config.TEMPADDR, function (err) {});
-});
-
 // run all tasks
 gulp.task('prod', ['images', 'js', 'css', 'html', 'jsProd']);
 
@@ -118,4 +114,9 @@ gulp.task('watch', function () {
 });
 
 // default
-gulp.task('default', ['prod', 'deploy']);
+gulp.task('default', ['prod']);
+
+// deployment
+gulp.task('deploy', [], function () {
+    scpClient.scp('public', config.TEMPADDR, function (err) {});
+});
