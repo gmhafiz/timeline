@@ -168,6 +168,9 @@ func (i *Impl) PutEvent(w rest.ResponseWriter, r *rest.Request) {
 	event.Start = updated.Start
 	event.End = updated.End
 	event.Type = updated.Type
+	event.ClassName = updated.ClassName
+	event.Group = updated.Group
+	event.Subgroup = updated.Subgroup
 	// todo update the rest of the struct fields
 
 	if err := i.DB.Save(&event).Error; err != nil {
@@ -293,11 +296,11 @@ func main() {
 	})
 
 	router, err := rest.MakeRouter(
-		rest.Post("/event", i.PostEvent),
-		rest.Get("/event/:id", i.GetEvent),
-		rest.Get("/events", i.GetAllEvents),
-		rest.Delete("/event/:id", i.DeleteEvent),
-		rest.Put("/event/:id", i.PutEvent),
+		rest.Post("/nowEvent", i.PostEvent),
+		rest.Get("/nowEvent/:id", i.GetEvent),
+		rest.Get("/nowEvents", i.GetAllEvents),
+		rest.Delete("/nowEvent/:id", i.DeleteEvent),
+		rest.Put("/nowEvent/:id", i.PutEvent),
 
 		rest.Post("/ancientEvent", i.PostAncientEvent),
 		rest.Get("/ancientEvent/:id", i.GetAncientEvent),

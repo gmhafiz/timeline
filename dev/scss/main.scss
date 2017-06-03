@@ -1,83 +1,150 @@
-html {
-  font-size: 14px;
-}
+$primaryColor: #edc3d1;
+$primaryColorLight: #ddcac3;
+$primaryColorDark: #84525e;
+
+$secondaryColor: #518a8d;
+$secondaryColorLight: #b9d3ce;
+$secondaryColorDark: #396163;
+
+$backgroundColor: #fff;
+$textPrimary: #f3f4f5;
+$textSecondary: #f3f4f5;
+
+$linkPrimary: #7a4c9a;
 
 body {
   background: #eaeaea;
-  /*background: #fff;*/
 }
 
-#timeline {
-  padding-left: 0;
-  padding-right: 0;
+header {
+  .bg-primary {
+    background-color: $primaryColor !important;
+  }
+
+  .btn-primary {
+    background-color: $secondaryColor;
+    border-color: $secondaryColorLight;
+    color: $textSecondary;
+
+    &:hover {
+      background-color: $secondaryColorLight;
+      border-color: lighten($secondaryColorLight, 5%);
+      color: invert($textSecondary);
+    }
+  }
+
+  nav {
+    a {
+      color: $linkPrimary !important;
+      &:hover {
+        color: lighten($linkPrimary, 10%) !important;
+      }
+    }
+  }
+
+  .navbar-toggler {
+    border-color:invert($textPrimary) !important;
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+  }
 }
 
-#visualization {
-  /*background: #cdebf3;*/
-  background: #fff;
+#timelineN, #timelineA, #timelineC {
+  .col {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-/*.jumbotron  {*/
-/*padding: 1rem 0;*/
-/*!*background: #c0dce3;*!*/
-/*background: #fff;*/
-/*}*/
-/*.jumbotron .row {*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*}*/
-/*.jumbotron .row .col {*/
-/*padding-left: 0;*/
-/*padding-right: 0;*/
-/*}*/
-
-/*.vis-today {*/
-/*background: #8eb38e;*/
-/*}*/
-
-.vis-point .vis-item-content {
-  background: #d5ddf6;
-  border: 1px #97b0f8;
+#visualizationN, #visualizationA, #visualizationC {
+  background: $backgroundColor;
 }
 
-/*Shift's type*/
-.rl .vis-item-overflow {
-  background-color: #07cadd;
+.vis-box .item {
+  background-color: $primaryColor;
+  border-color: lighten($secondaryColorLight, 10%);
+  color: invert($textSecondary);
 }
 
-.admin .vis-item-overflow {
-  background-color: #dd4840;
-}
-
-.mc .vis-item-overflow {
-  background-color: #f4f4f4;
-}
-
-.oncall .vis-item-overflow {
-  background-color: #dd883c;
-}
-
-.pita .vis-item-overflow {
-  background-color: #f4f4f4;
-}
-
-.pitb .vis-item-overflow {
-  background-color: #6bdd19;
-}
-
-.fasttrack .vis-item-overflow {
-  background-color: #dcdd77;
-}
-
-.nc .vis-item-overflow {
-  background-color: #dd7594;
+// Item color
+.vis-item-overflow{
+  background-color: $primaryColor;
+  border-color: lighten($secondaryColorLight, 10%);
+  color: invert($textSecondary);
 }
 
 #timelineNavigation {
-  background-color: #5764c6;
+  background-color: $primaryColor;
+  .btn-secondary {
+    background-color: $secondaryColor;
+    border-color: $secondaryColorLight;
+    color: $textSecondary;
+    &:hover {
+      background-color: $secondaryColorLight;
+      border-color: lighten($secondaryColorLight, 5%);
+      color: invert($textSecondary);
+    }
+  }
+  border-top: 1px solid $primaryColorDark;
+  border-bottom: 1px solid $primaryColorDark;
+  box-shadow: 0 0 1px $secondaryColorLight;
 }
 
-canvas {
-  width: 90%;
-  /*padding: 0  3rem;*/
+#searchResultSection, #addNewEventSection, #modifyThisEvent {
+  h5 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .btn-secondary {
+    background-color: $secondaryColor;
+    border-color: $secondaryColorLight;
+    color: $textSecondary;
+    &:hover {
+      background-color: $secondaryColorLight;
+      border-color: lighten($secondaryColorLight, 5%);
+      color: invert($textSecondary);
+    }
+  }
+
+  background-color: $backgroundColor;
+  margin-top: 1rem;
+  padding: 1rem;
+
+  border: 1px solid $primaryColorLight;
+  box-shadow: 0 0 8px #ccc;
+
+  .small {
+    padding-left:2rem;
+    font-weight: 300;
+  }
 }
+
+// Enter Event
+
+#startDateLabel, #startDateLabelS, #endDateLabel, #endDateLabelS {
+  width: 6rem;
+}
+
+textarea, .input {
+  &:focus {
+    //outline: none !important;
+    border:1px solid $secondaryColor;
+    box-shadow: 0 0 1px $secondaryColorLight;
+  }
+}
+
+footer {
+  a {
+    color: $linkPrimary !important;
+  }
+  p {
+    padding-top: 2rem;
+  }
+}
+
+//canvas {
+//  width: 90%;
+//  padding: 0  3rem;
+//}
