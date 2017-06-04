@@ -13,7 +13,7 @@ timeline
 node_modules
 public
 config.json
-backup_deploy.sh
+deploy.sh
 
 # User-specific stuff:
 .idea/**/workspace.xml

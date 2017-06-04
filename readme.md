@@ -64,7 +64,7 @@ Event struct {
 Example:
 
 ```bash
-http POST http://localhost:8080/api/event content="event 1" start=2016-12-11 end=2016-12-12 type=range
+http POST http://localhost:8080/api/nowEvent content="event 1" start=2016-12-11 end=2016-12-12 type=range
 ```
     
    
@@ -97,7 +97,7 @@ X-Powered-By: go-json-rest
 Example
 
 ```bash
-http GET http://localhost:8080/api/event/1
+http GET http://localhost:8080/api/nowEvent/1
 ```
     
     
@@ -130,7 +130,7 @@ X-Powered-By: go-json-rest
 Example:
     
 ```bash
-http GET http://localhost:8080/api/events
+http GET http://localhost:8080/api/nowEvents
 ```
 
 
@@ -178,7 +178,7 @@ X-Powered-By: go-json-rest
 Example
 
 ```bash
-http DELETE http://localhost:8080/api/event/3
+http DELETE http://localhost:8080/api/nowEvent/3
 ```
 
 Returns
@@ -199,7 +199,7 @@ X-Powered-By: go-json-rest
 Example
 
 ```bash
-http PUT http://localhost:8080/api/event/2 content="e4 updated"
+http PUT http://localhost:8080/api/nowEvent/2 content="e4 updated"
 ```
 
 Returns
@@ -234,7 +234,7 @@ X-Powered-By: go-json-rest
 - [x] Update timeline frontend automatically after submitting new event
 - [x] Viz timeline is populated from database immediately on page load
 - [x] Do UPDATE http request
-- [ ] moving or resizing event(s) updates the database
+- [x] moving or resizing event(s) updates the database
 
 ### Libraries
 
@@ -243,7 +243,6 @@ X-Powered-By: go-json-rest
 - [sqlite3 driver](https://github.com/mattn/go-sqlite3)
 - [gorm orm](https://github.com/jinzhu/gorm)
 - [sweetalert](https://t4t5.github.io/sweetalert)
-- [spectre css](https://picturepan2.github.io/spectre/index.html)
 - [moment js](https://momentjs.com/)
 
 ### Credits || References
