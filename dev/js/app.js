@@ -254,7 +254,6 @@ function fillInData(payload) {
     // submitEdittedItem(payload.id);
 }
 
-
 function hideEndDateDiv() {
     var endDateDiv = document.getElementById("endDateDiv");
     var endDateDivS = document.getElementById("endDateDivS");
@@ -404,6 +403,7 @@ jQuery(document).on('ready', function () {
                 JWTToken = JWTToken.replace(/"([^"]+(?="))"/g, '$1'); // removes double quotes around JWT
                 localStorage.setItem('token', JWTToken); // write
                 console.log(localStorage.getItem('token')); // read
+                location.reload();
             },
             error: function (data) {
                 console.log(data);
@@ -572,6 +572,14 @@ jQuery(document).on('ready', function () {
 
         });
     });
+
+    var authDiv = document.getElementById("authDiv");
+    if (localStorage.getItem('token') === null) {
+        authDiv.innerHTML = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loginModal'>Login</button>";
+    } else {
+        authDiv.innerHTML = "<button type='button' class='btn btn-primary' data-toggle='modal' onclick='return logout();'>Logout</button>";
+    }
+
 });
 
 function addEvent(itemObject) {
@@ -732,3 +740,8 @@ function searchEvents () {
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
+
+function logout() {
+    localStorage.clear('token');
+    location.reload();
+}
