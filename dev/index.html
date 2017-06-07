@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
     <link rel="stylesheet" href="css/main.css">
     <script src="https://t4t5.github.io/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://t4t5.github.io/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css"/>
@@ -40,6 +39,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cosmological.html">Cosmological</a>
                 </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                        Login
+                    </button>
+                </li>
             </ul>
 
             <form id="searchEvents" class="form-inline my-2 my-lg-0">
@@ -68,37 +72,41 @@
             <div class="text-center">
                 <div class="btn-group btn-group" role="group" aria-label="Timeline Navigation">
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredThousandYearsB');">-->
-                        <!--<i class="fa fa-angle-double-left"></i> 100kya-->
+                    <!--<i class="fa fa-angle-double-left"></i> 100kya-->
                     <!--</button>-->
-                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('tenThousandYearsB');" data-toggle="tooltip" data-placement="top" title="10 thousand years ago">
+                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('tenThousandYearsB');"
+                            data-toggle="tooltip" data-placement="top" title="10 thousand years ago">
                         <i class="fa fa-angle-double-left"></i>
                     </button>
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('thousandYearsB');">-->
-                        <!--<i class="fa fa-angle-left"></i> 1kya-->
+                    <!--<i class="fa fa-angle-left"></i> 1kya-->
                     <!--</button>-->
-                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredYearsB');" data-toggle="tooltip" data-placement="top" title="100 years ago">
+                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredYearsB');"
+                            data-toggle="tooltip" data-placement="top" title="100 years ago">
                         <i class="fa fa-angle-left"></i>
                     </button>
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('tenYearsB');">-->
-                        <!--<i class="fa fa-angle-left"></i> 10y-->
+                    <!--<i class="fa fa-angle-left"></i> 10y-->
                     <!--</button>-->
                     <button type="button" class="btn btn-secondary" onclick="gotoWhen('today');">
                         Today
                     </button>
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('tenYearsB');">-->
-                        <!--10y <i class="fa fa-angle-right"></i>-->
+                    <!--10y <i class="fa fa-angle-right"></i>-->
                     <!--</button>-->
-                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredYearsB');" data-toggle="tooltip" data-placement="top" title="100 years forward">
+                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredYearsB');"
+                            data-toggle="tooltip" data-placement="top" title="100 years forward">
                         <i class="fa fa-angle-right"></i>
                     </button>
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('thousandYearsB');">-->
-                        <!--1kya <i class="fa fa-angle-right"></i>-->
+                    <!--1kya <i class="fa fa-angle-right"></i>-->
                     <!--</button>-->
-                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('tenThousandYearsB');" data-toggle="tooltip" data-placement="top" title="10 thousand years forward">
+                    <button type="button" class="btn btn-secondary" onclick="gotoWhen('tenThousandYearsB');"
+                            data-toggle="tooltip" data-placement="top" title="10 thousand years forward">
                         <i class="fa fa-angle-double-right"></i>
                     </button>
                     <!--<button type="button" class="btn btn-secondary" onclick="gotoWhen('hundredThousandYearsB');">-->
-                        <!--100kya <i class="fa fa-angle-double-right"></i>-->
+                    <!--100kya <i class="fa fa-angle-double-right"></i>-->
                     <!--</button>-->
                 </div>
             </div>
@@ -145,15 +153,13 @@
                                            onclick="return hideEndDateDiv();"> Point
                                 </label>
                             </div>
-
-
                             <div class="form-group">
-                                <label id="startDateLabel" for="startDate" >Start Year</label>
+                                <label id="startDateLabel" for="startDate">Start Year</label>
                                 <input type="text" id="startDate" name="start" placeholder="YYYY-MM-DD">
                             </div>
 
                             <div id="endDateDiv" class="form-group">
-                                <label id="endDateLabel" for="endDate" >End Year</label>
+                                <label id="endDateLabel" for="endDate">End Year</label>
                                 <input type="text" id="endDate" name="end" placeholder="YYYY-MM-DD"
                                        onblur="return checkPoint();">
                             </div>
@@ -163,7 +169,6 @@
                                     <button type="submit" class="btn btn-secondary">Submit</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </form>
@@ -194,15 +199,14 @@
                                            onclick="return hideEndDateDiv();"> Point
                                 </label>
                             </div>
-
                             <div class="form-group">
-                                <label id="startDateLabelS" for="startDateS" >Start Year</label>
+                                <label id="startDateLabelS" for="startDateS">Start Year</label>
                                 <input type="text" class="" id="startDateS" name="start" placeholder="YYYY-MM-DD">
                             </div>
                             <div id="endDateDivS" class="form-group ">
-                                <label id="endDateLabelS" for="endDateS" >End Year</label>
+                                <label id="endDateLabelS" for="endDateS">End Year</label>
                                 <input type="text" class="" id="endDateS" name="end" placeholder="YYYY-MM-DD"
-                                           onblur="return checkPoint();">
+                                       onblur="return checkPoint();">
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-2 offset-sm-6">
@@ -212,6 +216,43 @@
                         </div>
                     </div>
                 </form>
+            </section>
+
+            <section>
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Login</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form id="loginForm">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username"
+                                               aria-describedby="username" name="username" value="admin">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" placeholder="Password"
+                                               name="password" value="admin">
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" onsubmit="return loginForm(this)">Login
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     </div>

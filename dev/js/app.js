@@ -208,9 +208,16 @@ function onSelect (properties) {
         url: baseURL + "api/" + era + "Event/" + itemNum,
         data: jsonData,
         dataType: "json",
+        beforeSend : function(xhr) {
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // Do not send request. Have to login.
+            }
+        },
         success: function (data) {
             var payload = JSON.stringify(data);
-            modifyThisEvent.style.display = 'block'; // todo: use popup modal box instead
+            modifyThisEvent.style.display = 'block';
             addNewEventSection.style.display = 'none';
             fillInData(data);
             console.log(payload);
@@ -220,7 +227,6 @@ function onSelect (properties) {
         }
     })
 }
-
 
 /**
  * Fills in the form for editing clicked item
@@ -377,6 +383,36 @@ function closeSearch() {
  */
 jQuery(document).on('ready', function () {
     /**
+     * Binds login form function.
+     * Saves JWT token from backend to localStorage
+     */
+    jQuery('form#loginForm').bind('submit', function (ev) {
+        ev.preventDefault();
+        var form = this;
+        var jsonData = ConvertFormToJSON(form);
+
+        $.ajax({
+            type: "POST",
+            url: baseURL + "api/login",
+            data: jsonData,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                var JWTToken = data.token;
+                JWTToken = JSON.stringify(JWTToken);
+                JWTToken = JWTToken.replace(/"([^"]+(?="))"/g, '$1'); // removes double quotes around JWT
+                localStorage.setItem('token', JWTToken); // write
+                console.log(localStorage.getItem('token')); // read
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+        return true;
+    });
+
+    /**
      * Actions when submit button for the name 'addEvent' is clicked.
      */
     jQuery('form#addEvent').bind('submit', function (ev) {
@@ -407,6 +443,13 @@ jQuery(document).on('ready', function () {
             data: jsonData,
             dataType: "json",
             contentType: "application/json",
+            beforeSend : function(xhr) {
+                if (localStorage.token) {
+                    xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+                } else {
+                    // Do not send request. Have to login.
+                }
+            },
             success: function (data) {
                 console.log(data);
                 console.log(jsonData);
@@ -421,7 +464,6 @@ jQuery(document).on('ready', function () {
         return true;
     });
 
-
     jQuery('form#getAllEvents').bind('submit', function (ev) {
         ev.preventDefault();
         var jsonData = {};
@@ -431,6 +473,13 @@ jQuery(document).on('ready', function () {
             url: baseURL + "api/" + era + "Events",
             data: jsonData,
             dataType: "json",
+            beforeSend : function(xhr) {
+                if (localStorage.token) {
+                    xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+                } else {
+                    // Do not send request. Have to login.
+                }
+            },
             success: function (data) {
                 var payload = JSON.stringify(data);
                 console.log(payload);
@@ -457,6 +506,13 @@ jQuery(document).on('ready', function () {
             url: baseURL + "api/" + era + "Events",
             data: jsonData,
             dataType: "json",
+            beforeSend : function(xhr) {
+                if (localStorage.token) {
+                    xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+                } else {
+                    // Do not send request. Have to login.
+                }
+            },
             success: function (data) {
                 var payload = JSON.stringify(data);
                 console.log(payload);
@@ -470,7 +526,6 @@ jQuery(document).on('ready', function () {
                 }
 
             },
-
             error: function (data) {
                 console.log(data);
                 console.log("error: " + jsonData);
@@ -496,6 +551,13 @@ jQuery(document).on('ready', function () {
             data: jsonData,
             dataType: "json",
             contentType: "application/json",
+            beforeSend : function(xhr) {
+                if (localStorage.token) {
+                    xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+                } else {
+                    // Do not send request. Have to login.
+                }
+            },
             success: function (data) {
                 console.log(data);
                 console.log(jsonData);
@@ -510,7 +572,6 @@ jQuery(document).on('ready', function () {
 
         });
     });
-
 });
 
 function addEvent(itemObject) {
@@ -523,6 +584,13 @@ function addEvent(itemObject) {
         data: jsonData,
         dataType: "json",
         contentType: "application/json",
+        beforeSend : function(xhr) {
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // Do not send request. Have to login.
+            }
+        },
         success: function (data) {
             console.log(data);
             console.log(jsonData);
@@ -545,6 +613,13 @@ function updateEvent(itemObject) {
         data: jsonData,
         dataType: "json",
         contentType: "application/json",
+        beforeSend : function(xhr) {
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // Do not send request. Have to login.
+            }
+        },
         success: function (data) {
             console.log(data);
             console.log(jsonData);
@@ -559,16 +634,28 @@ function updateEvent(itemObject) {
 
 function getAllEvents() {
     var jsonData = {};
+
+    console.log(localStorage.getItem('token')); // read
+
     $.ajax({
         type: "GET",
         url: baseURL + "api/" + era + "Events",
         data: jsonData,
         dataType: "json",
+        beforeSend : function(xhr) {
+            // set header if JWT is set
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // refuse to send
+                console.log("No token in localStorage");
+            }
+        },
         success: function (data) {
-
             items.clear();
             items.add(data);
             timeline.redraw();
+            console.log(data);
         },
         error: function (data) {
             console.log(data);
@@ -586,6 +673,13 @@ function deleteItemDB(id) {
         data: null,
         dataType: "json",
         contentType: "application/json",
+        beforeSend : function(xhr) {
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // Do not send request. Have to login.
+            }
+        },
         success: function () {
             console.log("Removed item :" + id);
             timeline.redraw();
@@ -609,6 +703,13 @@ function searchEvents () {
         url: baseURL + "api/" + era + "Events",
         data: jsonData,
         dataType: "json",
+        beforeSend : function(xhr) {
+            if (localStorage.token) {
+                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+            } else {
+                // Do not send request. Have to login.
+            }
+        },
         success: function (data) {
             var payload = JSON.stringify(data);
             console.log(payload);

@@ -4,10 +4,12 @@ import (
 	"log"
 	"net/http"
 	"fmt"
+	"time"
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/StephanDollberg/go-json-rest-middleware-jwt"
 )
 
 type (
@@ -274,25 +276,44 @@ func (i *Impl) DeleteCosmologicalEvent(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func HandleAuth(w rest.ResponseWriter, r *rest.Request) {
+	w.WriteJson(map[string]string{"authed": r.Env["REMOTE_USER"].(string)})
+}
 
 func main() {
 	i := Impl{}
 	i.InitDB()
 	i.InitSchema()
 
+	jwt_middleware := &jwt.JWTMiddleware {
+		Key		: []byte("secret key"),
+		Realm		: "jwt auth",
+		Timeout		: time.Hour,
+		MaxRefresh	: time.Hour * 24,
+		Authenticator	: func(userId string, password string) bool {
+			return userId == "admin" && password == "admin"
+		},
+	}
+
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
 	api.Use(&rest.CorsMiddleware{
 		RejectNonCorsRequests: false,
 		OriginValidator: func(origin string,  request *rest.Request) bool {
-			//return origin == "https://www.gmhafiz.com"
-			return true
+			return origin == "https://www.gmhafiz.com"
+			//return true
 		},
 		AllowedMethods: []string{"GET", "POST", "DELETE", "PUT", "OPTIONS"},
 		AllowedHeaders: []string {
 			"Accept", "Content-Type", "Origin"},
 		AccessControlAllowCredentials: true,
 		AccessControlMaxAge: 3600,
+	})
+	api.Use(&rest.IfMiddleware{
+		Condition : func(request *rest.Request) bool {
+			return request.URL.Path != "/login"
+		},
+		IfTrue: jwt_middleware,
 	})
 
 	router, err := rest.MakeRouter(
@@ -313,6 +334,11 @@ func main() {
 		rest.Get("/cosmologicalEvents", i.GetAllCosmologicalEvents),
 		rest.Delete("/cosmologicalEvent/:id", i.DeleteCosmologicalEvent),
 		rest.Put("/cosmologicalEvent/:id", i.PutCosmologicalEvent),
+
+		rest.Post("/login", jwt_middleware.LoginHandler),
+		rest.Get("/auth_test", HandleAuth),
+		rest.Get("/refresh_token", jwt_middleware.RefreshHandler),
+
 	)
 	if err != nil {
 		log.Fatalln(err)
@@ -323,5 +349,4 @@ func main() {
 	http.Handle("/timeline/", http.StripPrefix("/timeline", http.FileServer(http.Dir("./public"))))
 	fmt.Println("Serving at :8080")
 	log.Fatalln(http.ListenAndServe(":8080", nil))
-
 }
