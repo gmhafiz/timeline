@@ -1,3 +1,5 @@
+'use strict';
+
 // Global variables
 var baseURL = "http://localhost:8080/";
 var optionMax;
@@ -12,12 +14,12 @@ if (era === "cosmological") { // from -14,000,000,000 to -1,000,000
 } else if (era === "ancient") {
     optionMax = "-000100-12-31"; // 100kya mya
     optionMin = "-001000-01-01"; // 1 mya
-    optionZoomMin = 1000*60*60*24*365*100; // 100 year max zoom
+    optionZoomMin = 1000*60*60*24*365*10; // 10 years
     visualizationId = "visualizationA";
 } else if (era === "now") {
     optionMax = "3000-01-01"; // 1 mya
     optionMin = "-100000-01-01"; // 100kya
-    optionZoomMin = 1000*60*60*24*30*6; //220752000000; // 1 year max zoom //fixme
+    optionZoomMin = 1000*60*60*24*30*6; // 6 months
     visualizationId = "visualizationN";
 }
 var modifyThisEvent= document.getElementById("modifyThisEvent");
@@ -128,18 +130,10 @@ function searchContent (data, searchString) {
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var arr = obj["content"];
-        // for (var j = 0; j < arr.length; j++) {
-        //     if (arr === searchString) {
         if (regexString.test(arr)) {
             console.log(obj);
             result.push(obj);
-            // return obj;
         }
-        // if (arr[j] === searchString) {
-        //     console.log(obj);
-        //     return obj;
-        // }
-        // }
     }
     return result;
 }
@@ -150,20 +144,50 @@ function searchContent (data, searchString) {
  * @param searchResult One JSON object
  */
 function displayResult(searchResult) {
-    searchResultSection.style.display = 'block';
+    searchResultSection.style.display = 'block'; // todo: make div appear and disappear with smooth animated transition
     var startDateIs = searchResult["start"];
     var startDateIsQuotes = "'"+startDateIs+"'"; // need to put single quote around this date for link to work
-    startDateIs = moment(startDateIs).format('YYYY');
+    var year = moment(startDateIs).year();
+    startDateIs = moment(startDateIs).format('DD MMM YYYY');
 
-    // todo: format start date to a more human readable format
-    // todo: check if string is longer than substring length ? put ... : don't put ...
+    var content = searchResult["content"];
+    if (content.length > 30) {
+        content = content.substring(0,30) + "..."; // truncate content so that it won't wrap around on mobile devices.
+    }
+
+    var yearsAgo, num;
+    if (era === 'now') {
+        if (year < -999) {
+            num = Math.floor(year * -1 / 1000);
+            console.log(num);
+            yearsAgo = num + " thousand BCE";
+        } else  if (year < -99) {
+            num = Math.floor(year * -1);
+            yearsAgo = num + " BCE";
+        } else {
+            yearsAgo = startDateIs;
+        }
+    } else if (era === 'ancient') {
+        if (year < -999) {
+            num = Math.floor(year * -1);
+            yearsAgo = num + " thousand BCE";
+        } else if (year < -99999) {
+            num = Math.floor(year * -1);
+            yearsAgo = num + " million BCE";
+        }
+    } else if (era === 'cosmological') {
+        if (year < -999) {
+            num = Math.floor(year * -1) / 1000;
+            yearsAgo = num + " million BCE";
+        } else {
+            num = Math.floor(year * -1);
+            yearsAgo = num + " million BCE";
+        }
+    }
     // https://stackoverflow.com/questions/1265887/call-javascript-function-on-hyperlink-click?rq=1
-    //     searchResultDiv.insertAdjacentHTML('afterend',
-    //     "<p>Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" + searchResult["content"].substring(0, 25) + "...</a><br />" +
-    //     "Date: "+ startDateIs + " million years ago</p>");
-
-    searchResultDiv.innerHTML += "<p>Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" + searchResult["content"].substring(0, 25) + "...</a><br />" +
-        "<span class='small'>Date: "+ startDateIs + " million years ago</span> </p>";
+    // todo: limit search result to 10 results. make it pagination?
+    searchResultDiv.innerHTML += "<hr /><p>Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" +
+        content + "</a><br />" + "<span class='small'>Date: "+ yearsAgo + "</span></p>";
 }
 
 /**
@@ -179,7 +203,7 @@ function moveWindow(startDate) {
         }
     };
     timeline.moveTo(startDate, moveToOptions);
-    // todo: automatically zoom to appropriate level
+    // todo: automatically zoom to appropriate level according to era
 }
 
 /**
@@ -213,6 +237,8 @@ function onSelect (properties) {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
+                // todo: show friendly message saying has to login first
+                xhr.abort()
             }
         },
         success: function (data) {
@@ -561,7 +587,7 @@ jQuery(document).on('ready', function () {
             success: function (data) {
                 console.log(data);
                 console.log(jsonData);
-                // items.clear();
+                items.clear();
                 items.add(data);
                 timeline.redraw();
             },
