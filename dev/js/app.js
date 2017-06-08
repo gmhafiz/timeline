@@ -601,9 +601,9 @@ jQuery(document).on('ready', function () {
 
     var authDiv = document.getElementById("authDiv");
     if (localStorage.getItem('token') === null) {
-        authDiv.innerHTML = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loginModal'>Login</button>";
+        authDiv.innerHTML = "<button id='loginButton' type='button' class='btn btn-primary' data-toggle='modal' data-target='#loginModal'>Login</button>";
     } else {
-        authDiv.innerHTML = "<button type='button' class='btn btn-primary' data-toggle='modal' onclick='return logout();'>Logout</button>";
+        authDiv.innerHTML = "<button id='logoutButton' type='button' class='btn btn-primary' data-toggle='modal' onclick='return logout();'>Logout</button>";
     }
 
 });
@@ -623,6 +623,7 @@ function addEvent(itemObject) {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
+                $('#loginModal').modal('show')
             }
         },
         success: function (data) {
@@ -652,6 +653,7 @@ function updateEvent(itemObject) {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
+                $('#loginModal').modal('show')
             }
         },
         success: function (data) {
@@ -683,6 +685,7 @@ function getAllEvents() {
             } else {
                 // refuse to send
                 console.log("No token in localStorage");
+                $('#loginModal').modal('show')
             }
         },
         success: function (data) {
@@ -694,6 +697,19 @@ function getAllEvents() {
         error: function (data) {
             console.log(data);
             console.log("error: " + jsonData);
+            console.log("status code: " + data.status);
+            if (data.status === 401) {
+                localStorage.clear('token');
+                var loginButton = document.getElementById("loginButton");
+                var logoutButton = document.getElementById("logoutButton");
+                if (loginButton !== null) {
+                    loginButton.style.display = 'block';
+                }
+                if (logoutButton !== null) {
+                    logoutButton.style.display = 'none';
+                }
+                $('#loginModal').modal('show')
+            }
         }
     });
 
@@ -712,6 +728,7 @@ function deleteItemDB(id) {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
+                $('#loginModal').modal('show')
             }
         },
         success: function () {
@@ -742,6 +759,7 @@ function searchEvents () {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
+                $('#loginModal').modal('show')
             }
         },
         success: function (data) {
@@ -770,4 +788,5 @@ $(function () {
 function logout() {
     localStorage.clear('token');
     location.reload();
+    // todo: set cookie to know user has clicked on logout button?
 }

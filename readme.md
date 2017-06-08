@@ -228,13 +228,10 @@ X-Powered-By: go-json-rest
 - [x] Two way data binding
 - [x] CORS Support
 - [ ] Allow user registration with oauth
-- [ ] Allow only logged in user to modify data
+- [x] Allow only logged in user to modify data
 - [ ] Limit JSON acceptance size
-- [x] Make frontend load `public/events.json` automatically
-- [x] Update timeline frontend automatically after submitting new event
-- [x] Viz timeline is populated from database immediately on page load
-- [x] Do UPDATE http request
-- [x] moving or resizing event(s) updates the database
+- [ ] Allow multiple users to use the app
+- [ ] Allow rich HTML usage for event content
 
 ### Libraries
 
