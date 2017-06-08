@@ -40,6 +40,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cosmological.html">Cosmological</a>
                 </li>
+                <li class="nav-item">
+                    <div id="authDiv"></div>
+                </li>
             </ul>
 
             <form id="searchEvents" class="form-inline my-2 my-lg-0">
@@ -189,129 +192,44 @@
                 </form>
             </section>
 
-            <!--<form class="form-horizontal" id="addEvent">-->
-            <!--<div class="form-group">-->
-            <!--<div class="col-3">-->
-            <!--<label class="form-label" for="content">Event</label>-->
-            <!--</div>-->
-            <!--<div class="col-9">-->
-            <!--<textarea id="content" type="text" class="form-input" name="content" rows="3"></textarea>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-            <!--<div class="col-3">-->
-
-            <!--<label class="form-label">Type of Event</label>-->
-            <!--</div>-->
-            <!--<div class="col-9">-->
-
-            <!--<label class="form-radio">-->
-            <!--<input id="typeRanged" class="" type="radio" name="type" value="range"-->
-            <!--checked onclick="return showEndDateDiv();"/>-->
-            <!--<i class="form-icon"></i> Range-->
-            <!--</label>-->
-
-            <!--<label class="form-radio">-->
-            <!--<input id="typePoint" class="" type="radio" name="type" value="point"-->
-            <!--onclick="return hideEndDateDiv();"/>-->
-            <!--<i class="form-icon"></i> Point-->
-            <!--</label>-->
-
-            <!--</div>-->
-
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-            <!--<div class="col-3">-->
-            <!--<label id="startDateLabel" for="startDate">Start Date</label>-->
-            <!--</div>-->
-            <!--<div class="col-9">-->
-            <!--&lt;!&ndash;<input id="startDate" type="text" class="form-control" name="start" value="2017-04-16">&ndash;&gt;-->
-            <!--<input type="text" id="startDate" class="form-control" name="start">-->
-
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div id="endDateDiv" class="form-group">-->
-            <!--<div class="col-3">-->
-            <!--<label for="endDate">End Date</label>-->
-            <!--</div>-->
-            <!--<div class="col-9">-->
-            <!--&lt;!&ndash;<input id="endDate" type="text" class="form-control" name="end" value="2017-04-19" onblur="return checkPoint();">&ndash;&gt;-->
-            <!--<input type="text" id="endDate" class="form-control" name="end" onblur="return checkPoint();">-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-            <!--<div class="col-3"></div>-->
-            <!--<div class="col-9">-->
-            <!--<button type="submit" class="btn btn-primary">Submit</button>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</form>-->
-
+            <section>
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form id="loginForm">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username"
+                                               aria-describedby="username" name="username" value="admin">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" placeholder="Password"
+                                               name="password" value="admin">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" onsubmit="return loginForm(this)">
+                                        Login
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <!--<div class="column col-sm-12 col-md-6 col-lg-6">-->
-        <!--<h5>Search</h5>-->
-        <!--<form id="searchEvents" class="form-horizontal">-->
-        <!--<div class="form-group">-->
-        <!--<div class="col-3">-->
-        <!--<label for="searchString">-->
-        <!--Search by event name:-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="col-9">-->
-        <!--<input id="searchString" class="form-input" type="text" name="searchString">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--<div class="col-3"></div>-->
-        <!--<div class="col-9">-->
-        <!--<button type="submit" class="btn btn-primary">Search</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</form>-->
-
-        <!--<div id="searchResult">-->
-
-        <!--</div>-->
-
-        <!--</div>-->
     </div>
-    <!--<div class="divider"></div>-->
-    <!--<div class="columns">-->
-    <!--<div class="column col-sm-6 col-md-6">-->
-    <!--<h5>Get All Events in JSON</h5>-->
-    <!--<form class="form-horizontal" id="getAllEvents">-->
-    <!--<div class="form-group">-->
-    <!--<div class="col-3">-->
-    <!--<label class="form-label" for="payload">Event JSON</label>-->
-    <!--</div>-->
-    <!--<div class="col-9">-->
-    <!--<textarea id="payload" type="text" class="form-input" name="payload" rows="5"></textarea>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-    <!--<div class="col-3"></div>-->
-    <!--<div class="col-9">-->
-    <!--<button type="submit" class="btn btn-primary">Get All Events</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--<div class="column col-sm-6 col-md-6">-->
-    <!--<h5>Event Log:</h5>-->
-    <!--<div id="log"></div>-->
-    <!--</div>-->
-    <!--</div>-->
 </div>
-<!--<div clacontainerCiner">-->
-<!--<div class="columns">-->
-<!--<div class="column col-sm-12">-->
-<!--<div id="log"></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
 
 <footer>
     <div class="container-fluid">
@@ -341,7 +259,6 @@
 <script>var era = "cosmological";</script>
 <script src="js/app.js"></script>
 <script src="js/appCosmological.js"></script>
-
 
 </body>
 </html>
