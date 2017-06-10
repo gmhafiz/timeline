@@ -20,6 +20,13 @@ body {
   }
 }
 
+a {
+  color: $linkPrimary !important;
+  &:hover {
+    color: lighten($linkPrimary, 10%) !important;
+  }
+}
+
 header {
   .bg-primary {
     background-color: $primaryColor !important;
@@ -37,20 +44,26 @@ header {
     }
   }
 
-  nav {
-    a {
-      color: $linkPrimary !important;
-      &:hover {
-        color: lighten($linkPrimary, 10%) !important;
-      }
-    }
-  }
-
   .navbar-toggler {
     border-color:invert($textPrimary) !important;
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
     }
+  }
+  svg {
+    margin-bottom: -0.5rem;
+  }
+}
+
+#eraNav {
+  background-color: lighten($primaryColor, 3%);
+  font-family: serif;
+  a > span {
+      font-size: 1.2rem;
+
+  }
+  span {
+    font-size: 1.5rem;
   }
 }
 
@@ -90,9 +103,9 @@ header {
       color: invert($textSecondary);
     }
   }
-  border-top: 1px solid $primaryColorDark;
-  border-bottom: 1px solid $primaryColorDark;
-  box-shadow: 0 0 1px $secondaryColorLight;
+  border-top: 1px solid darken($primaryColor, 3%);
+  border-bottom: 1px solid darken($primaryColor, 3%);
+  box-shadow: 0 0 5px $secondaryColorLight;
 }
 
 #searchResultSection, #addNewEventSection, #modifyThisEvent {
@@ -140,9 +153,6 @@ textarea, .input {
 }
 
 footer {
-  a {
-    color: $linkPrimary !important;
-  }
   p {
     padding-top: 2rem;
   }

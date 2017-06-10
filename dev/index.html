@@ -22,19 +22,25 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="index.html">gmhafiz's Timeline</a>
+        <a class="navbar-brand" href="index.html">
+            <svg id="i-clock" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <circle cx="16" cy="16" r="14" />
+                <path d="M16 8 L16 16 20 20" />
+            </svg>
+            gmhafiz's Timeline
+        </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ancient.html">Ancient</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cosmological.html">Cosmological</a>
-                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="index.html">Home</a>-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="ancient.html">Ancient</a>-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="cosmological.html">Cosmological</a>-->
+                <!--</li>-->
                 <li class="nav-item">
                     <div id="authDiv"></div>
                 </li>
@@ -52,6 +58,12 @@
 
 <div id="timelineN">
     <div class="container-fluid">
+        <div id="eraNav" class="row">
+            <div class="col text-center">
+                <a href="ancient.html"><span class="float-left">&#10094; Ancient</span></a>
+                <span>Present</span>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div id="visualizationN"></div>
