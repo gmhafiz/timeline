@@ -85,6 +85,7 @@ options = {
     }
 };
 var timeline = new vis.Timeline(container, items, options);
+timeline.setWindow("-000150-01-01", "-000101-12-31"); // re-render after loading. But gives some animations to user.
 
 // add event listener
 timeline.on('select', onSelect);

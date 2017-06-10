@@ -181,8 +181,11 @@ function displayResult(searchResult) {
     }
     // https://stackoverflow.com/questions/1265887/call-javascript-function-on-hyperlink-click?rq=1
     // todo: limit search result to 10 results. make it pagination?
-    searchResultDiv.innerHTML += "<hr /><p><i class='fa fa-caret-right'></i> Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" +
-        content + "</a><br />" + "<span class='small'><i class='fa fa-calendar'></i> Date: "+ yearsAgo + "</span></p>";
+    searchResultDiv.innerHTML += "<hr /><p>&#8227; Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" +
+        content + "</a><br />" + "<span class='small'>" +
+        "<svg id='i-calendar' viewBox='0 0 32 32' width='16' height='16' fill='none' stroke='currentcolor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9' /></svg> " +
+        " "+ yearsAgo + "</span></p>";
+    // https://github.com/danklammer/bytesize-icons
 }
 
 /**

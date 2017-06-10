@@ -73,7 +73,7 @@ options = {
 
 // Create a Timeline
 var timeline = new vis.Timeline(container, items, options);
-
+timeline.setWindow("2017-01-01", "2017-12-31"); // re-render after loading. But gives some animations to user.
 
 // add event listener
 timeline.on('select', onSelect);

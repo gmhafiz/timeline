@@ -86,6 +86,7 @@ options = {
     }
 };
 var timeline = new vis.Timeline(container, items, options);
+timeline.setWindow("-000015-01-01", "-000001-12-31"); // re-render after loading. But gives some animations to user.
 
 
 // add event listener
