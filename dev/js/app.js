@@ -268,8 +268,7 @@ function onSelect (properties) {
                 xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
             } else {
                 // Do not send request. Have to login.
-                // todo: show friendly message saying has to login first
-                xhr.abort()
+                $('#loginModal').modal('show')
             }
         },
         success: function (data) {
@@ -453,6 +452,14 @@ jQuery(document).on('ready', function () {
             data: jsonData,
             dataType: "json",
             contentType: "application/json",
+            beforeSend : function(xhr) {
+                if (localStorage.token) {
+                    xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
+                } else {
+                    // Do not send request. Have to login.
+                    $('#loginModal').modal('show');
+                }
+            },
             success: function (data) {
                 console.log(data);
                 var JWTToken = data.token;
@@ -505,6 +512,7 @@ jQuery(document).on('ready', function () {
                     xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
                 } else {
                     // Do not send request. Have to login.
+                    $('#loginModal').modal('show');
                 }
             },
             success: function (data) {
@@ -535,6 +543,7 @@ jQuery(document).on('ready', function () {
                     xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
                 } else {
                     // Do not send request. Have to login.
+                    $('#loginModal').modal('show');
                 }
             },
             success: function (data) {
@@ -568,6 +577,7 @@ jQuery(document).on('ready', function () {
                     xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
                 } else {
                     // Do not send request. Have to login.
+                    $('#loginModal').modal('show');
                 }
             },
             success: function (data) {
@@ -613,6 +623,7 @@ jQuery(document).on('ready', function () {
                     xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
                 } else {
                     // Do not send request. Have to login.
+                    $('#loginModal').modal('show');
                 }
             },
             success: function (data) {
@@ -772,41 +783,6 @@ function deleteItemDB(id) {
                 console.log("Unsuccessful removal of item " + id);
                 console.log(data);
             }
-        }
-    })
-}
-
-function searchEvents () {
-    var jsonData = {};
-    var searchString = document.getElementById("searchString").value;
-    var searchResult = [];
-    $.ajax({
-        type: "GET",
-        url: baseURL + "api/" + era + "Events",
-        data: jsonData,
-        dataType: "json",
-        beforeSend : function(xhr) {
-            if (localStorage.token) {
-                xhr.setRequestHeader("Authorization", "Bearer " +  localStorage.token);
-            } else {
-                // Do not send request. Have to login.
-                $('#loginModal').modal('show')
-            }
-        },
-        success: function (data) {
-            var payload = JSON.stringify(data);
-            console.log(payload);
-
-            searchResult = searchContent(data, searchString);
-            console.log(searchResult);
-            for (var i = 0; i < searchResult.length; i++) {
-                displayResult(searchResult[i]);
-            }
-
-        },
-        error: function (data) {
-            console.log(data);
-            console.log("error: " + jsonData);
         }
     })
 }
