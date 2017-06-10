@@ -58,6 +58,7 @@ header {
 #eraNav {
   background-color: lighten($primaryColor, 3%);
   font-family: serif;
+  color: darken($secondaryColor, 5%);
   a > span {
       font-size: 1.2rem;
 
@@ -78,16 +79,15 @@ header {
   background: $backgroundColor;
 }
 
-.vis-box .item {
-  background-color: $primaryColor;
-  border-color: lighten($secondaryColorLight, 10%);
+.vis-item {
+  background-color: lighten($primaryColor, 10%);
+  border-color: $secondaryColor;
   color: invert($textSecondary);
 }
 
-// Item color
-.vis-item-overflow{
+.vis-box {
   background-color: $primaryColor;
-  border-color: lighten($secondaryColorLight, 10%);
+  border-color: $secondaryColor;
   color: invert($textSecondary);
 }
 
