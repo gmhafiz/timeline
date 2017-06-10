@@ -197,8 +197,44 @@ function moveWindow(startDate) {
             easingFunction: "easeInOutQuad"
         }
     };
-    timeline.moveTo(startDate, moveToOptions);
-    // todo: automatically zoom to appropriate level according to era
+
+    //automatically zoom to appropriate level according to era
+    var year = moment(startDate).year();
+    var date = moment(startDate);
+    var year1, year2;
+    if (era === 'now') {
+        if (year > -99) {
+            year1 = moment(date).subtract(1, 'months');
+            year2 = moment(date).add(1, 'months');
+            timeline.setWindow(year1, year2, moveToOptions);
+        } else if (year > -999) {
+            year1 = moment(date).subtract(50, 'years');
+            year2 = moment(date).add(50, 'years');
+            timeline.setWindow(year1, year2, moveToOptions);
+        } else if (year > -4999) {
+            year1 = moment(date).subtract(500, 'years');
+            year2 = moment(date).add(500, 'years');
+            timeline.setWindow(year1, year2, moveToOptions);
+        } else {
+            year1 = moment(date).subtract(2500, 'years');
+            year2 = moment(date).add(2500, 'years');
+            timeline.setWindow(year1, year2, moveToOptions);
+        }
+    } else if (era === 'ancient') {
+        year1 = moment(date).subtract(15, 'years');
+        year2 = moment(date).add(15, 'years');
+        timeline.setWindow(year1, year2, moveToOptions);
+    } else if (era === 'cosmological') {
+        if (year < -999) {
+            year1 = moment(date).subtract(500, 'years');
+            year2 = moment(date).add(500, 'years');
+            timeline.setWindow(year1, year2, moveToOptions);
+        } else {
+            year1 = moment(date).subtract(5, 'years');
+            year2 = moment(date).add(5, 'years');
+            timeline.setWindow(year1, year2, moveToOptions);
+        }
+    }
 }
 
 /**

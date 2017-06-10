@@ -27,6 +27,7 @@ options = {
 
     onMove: function (item, callback) {
         console.log(item);
+        // fixme: different timezones causes events not to display at the correct intended timeline -000500-01-01
         var start = item.start;
         start = moment(start);
         start.add(moment.duration(1, 'days'));
