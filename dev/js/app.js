@@ -8,7 +8,7 @@ var optionZoomMin;
 var visualizationId;
 if (era === "cosmological") { // from -14,000,000,000 to -1,000,000
     optionMax = "-000001-01-01"; // 1 mya
-    optionMin = "-014000-01-01"; // 14 bya
+    optionMin = "-014000-01-01"; // 14 bya. Oldest is 13.7 bya.
     optionZoomMin = 1000*60*60*24*365*10; // 1o years
     visualizationId = "visualizationC";
 } else if (era === "ancient") {
@@ -102,7 +102,7 @@ function gotoWhen(when) {
         toAdd = moment.duration(100000, 'years');
         date.add(toAdd);
     } else if (when === 'millionYearsB') {
-        // fixme: million years not supported in momentjs/javascript/visjs?
+        // fixme: million years not supported in momentjs/javascript/visjs
         // https://stackoverflow.com/questions/8860297/can-you-create-dates-that-are-lower-than-271800-bc-like-dinosaur-time
         toSubtract = moment.duration(1000000, 'years');
         date.subtract(toSubtract);
@@ -168,17 +168,12 @@ function displayResult(searchResult) {
             yearsAgo = startDateIs;
         }
     } else if (era === 'ancient') {
-        if (year < -999) {
-            num = Math.floor(year * -1);
-            yearsAgo = num + " thousand BCE";
-        } else if (year < -99999) {
-            num = Math.floor(year * -1);
-            yearsAgo = num + " million BCE";
-        }
+        num = Math.floor(year * -1);
+        yearsAgo = num + " thousand BCE"
     } else if (era === 'cosmological') {
         if (year < -999) {
             num = Math.floor(year * -1) / 1000;
-            yearsAgo = num + " million BCE";
+            yearsAgo = num + " billion BCE";
         } else {
             num = Math.floor(year * -1);
             yearsAgo = num + " million BCE";
@@ -186,8 +181,8 @@ function displayResult(searchResult) {
     }
     // https://stackoverflow.com/questions/1265887/call-javascript-function-on-hyperlink-click?rq=1
     // todo: limit search result to 10 results. make it pagination?
-    searchResultDiv.innerHTML += "<hr /><p>Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" +
-        content + "</a><br />" + "<span class='small'>Date: "+ yearsAgo + "</span></p>";
+    searchResultDiv.innerHTML += "<hr /><p><i class='fa fa-caret-right'></i> Event: <a href=javascript:moveWindow("+startDateIsQuotes+")>" +
+        content + "</a><br />" + "<span class='small'><i class='fa fa-calendar'></i> Date: "+ yearsAgo + "</span></p>";
 }
 
 /**
