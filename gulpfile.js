@@ -91,7 +91,7 @@ gulp.task('html', function () {
 
 
 // Change all localhost url to prod url
-var URL = 'https://www.gmhafiz.com/';
+var URL = 'https://timeline.gmhafiz.com/';
 var SOURCE = 'dev';
 var BUILD = 'public';
 gulp.task('jsProd', function () {
