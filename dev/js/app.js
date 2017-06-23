@@ -606,11 +606,10 @@ jQuery(document).on('ready', function () {
     jQuery('form#modifyEvent').bind('submit', function (ev) {
         ev.preventDefault();
         var form = this;
-        // var itemId = form[5].value;
         var itemId = document.getElementById("itemIdS").value;
-
-        // del form[5];
         var jsonData = ConvertFormToJSON(form);
+
+        items.remove(itemId); // remove item from data set before updating the database
 
         console.log(jsonData);
         console.log(itemId);
@@ -629,11 +628,7 @@ jQuery(document).on('ready', function () {
                     $('#loginModal').modal('show');
                 }
             },
-            success: function (data) {
-                console.log(data);
-                console.log(jsonData);
-                items.clear();
-                items.add(data);
+            success: function () {
                 timeline.redraw();
             },
             error: function (data) {
